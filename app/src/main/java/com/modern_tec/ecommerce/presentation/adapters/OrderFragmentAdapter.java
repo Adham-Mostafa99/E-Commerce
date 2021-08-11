@@ -1,0 +1,44 @@
+package com.modern_tec.ecommerce.presentation.adapters;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+
+public class OrderFragmentAdapter extends FragmentPagerAdapter {
+
+    ArrayList<Fragment> fragmentArrayList = new ArrayList<>();
+    ArrayList<String> fragmentArrayListTitle = new ArrayList<>();
+
+    public OrderFragmentAdapter(@NonNull @NotNull FragmentManager fm) {
+        super(fm);
+    }
+
+    public void addFragment(Fragment fragment, String title) {
+        fragmentArrayList.add(fragment);
+        fragmentArrayListTitle.add(title);
+    }
+
+    @NonNull
+    @NotNull
+    @Override
+    public Fragment getItem(int position) {
+        return fragmentArrayList.get(position);
+    }
+
+    @Override
+    public int getCount() {
+        return fragmentArrayList.size();
+    }
+
+    @Nullable
+    @Override
+    public CharSequence getPageTitle(int position) {
+        return fragmentArrayListTitle.get(position);
+    }
+}
