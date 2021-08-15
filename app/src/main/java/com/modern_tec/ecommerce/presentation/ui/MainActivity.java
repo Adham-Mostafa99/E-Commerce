@@ -16,8 +16,6 @@ import com.google.firebase.auth.FirebaseUser;
 import com.modern_tec.ecommerce.presentation.ui.buyers.HomeActivity;
 import com.modern_tec.ecommerce.presentation.ui.buyers.LoginActivity;
 import com.modern_tec.ecommerce.presentation.ui.buyers.RegisterActivity;
-import com.modern_tec.ecommerce.presentation.ui.seller.SellerCategoryActivity;
-import com.modern_tec.ecommerce.presentation.ui.seller.SellerHomeActivity;
 import com.modern_tec.ecommerce.presentation.ui.seller.SellerMainActivity;
 
 public class MainActivity extends AppCompatActivity {

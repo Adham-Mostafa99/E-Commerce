@@ -1,6 +1,7 @@
 package com.modern_tec.ecommerce.presentation.ui.seller;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -14,10 +15,14 @@ import com.modern_tec.ecommerce.data.shared_pref.RememberUser;
 import com.modern_tec.ecommerce.databinding.ActivitySellerLoginBinding;
 import com.modern_tec.ecommerce.presentation.viewmodels.UserViewModel;
 
+import java.security.acl.Owner;
+
 public class SellerLoginActivity extends AppCompatActivity {
     ActivitySellerLoginBinding binding;
     private ProgressDialog progressDialog;
     UserViewModel userViewModel;
+
+    LifecycleOwner lifecycleOwner = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,13 +37,15 @@ public class SellerLoginActivity extends AppCompatActivity {
                 String email = binding.sellerLoginEmail.getText().toString().trim();
                 String password = binding.sellerLoginPassword.getText().toString().trim();
                 if (isValid(email, password)) {
-                    userViewModel.loginSeller(email, password);
+                    sellerLoginAction(email, password);
                     showProgress("Login");
                 }
             }
         });
+    }
 
-        userViewModel.getIsLogin().observe(this, new Observer<Boolean>() {
+    private void sellerLoginAction(String email, String password) {
+        userViewModel.loginSeller(email, password).observe(lifecycleOwner, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
                 progressDialog.dismiss();
@@ -50,7 +57,6 @@ public class SellerLoginActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void initViews() {

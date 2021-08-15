@@ -35,6 +35,7 @@ public class ProductService {
 
 
     private MutableLiveData<Boolean> isProductUpload = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isProductApproved = new MutableLiveData<>();
     private MutableLiveData<Boolean> isProductDeleted = new MutableLiveData<>();
     private MutableLiveData<List<Product>> productMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<Product> singleProductMutableLiveData = new MutableLiveData<>();
@@ -115,6 +116,31 @@ public class ProductService {
                     }
                 });
 
+    }
+
+    public void getUnApprovedProducts() {
+        productReference
+                .child(PRODUCT_REF_NAME)
+                .orderByChild("productState")
+                .equalTo("Not Approved")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        ArrayList<Product> productArrayList = new ArrayList<>();
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            if (dataSnapshot.exists()) {
+                                Product currentProduct = dataSnapshot.getValue(Product.class);
+                                productArrayList.add(currentProduct);
+                            }
+                        }
+                        productMutableLiveData.setValue(productArrayList);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                    }
+                });
     }
 
     public void getProducts() {
@@ -204,6 +230,21 @@ public class ProductService {
                 });
     }
 
+
+    public void approveProduct(String id) {
+        productReference
+                .child(PRODUCT_REF_NAME)
+                .child(id)
+                .child("productState")
+                .setValue("Approved")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<Void> task) {
+                        isProductApproved.setValue(true);
+                    }
+                });
+    }
+
     public void getProductByName(String productName) {
         productReference
                 .child(PRODUCT_REF_NAME)
@@ -238,6 +279,10 @@ public class ProductService {
 
     public LiveData<Product> getSingleProductMutableLiveData() {
         return singleProductMutableLiveData;
+    }
+
+    public LiveData<Boolean> getIsProductApproved() {
+        return isProductApproved;
     }
 
     public LiveData<Boolean> getIsProductDeleted() {

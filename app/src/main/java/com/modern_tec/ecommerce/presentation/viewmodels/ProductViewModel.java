@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.modern_tec.ecommerce.core.models.Product;
-import com.modern_tec.ecommerce.presentation.repository.ProductRepo;
+import com.modern_tec.ecommerce.data.repository.ProductRepo;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -42,6 +42,13 @@ public class ProductViewModel extends AndroidViewModel {
         productRepo.getProductByName(productName);
     }
 
+    public void approveProduct(String id) {
+        productRepo.approveProduct(id);
+    }
+
+    public LiveData<Boolean> getIsProductApproved() {
+        return productRepo.getIsProductApproved();
+    }
     public LiveData<Boolean> getIsProductUpload() {
         return isProductUpload;
     }
@@ -60,6 +67,10 @@ public class ProductViewModel extends AndroidViewModel {
 
     public void getProducts() {
         productRepo.getProducts();
+    }
+
+    public void getUnApprovedProducts() {
+        productRepo.getUnApprovedProducts();
     }
 
     public void getSellerProducts(String sellerId) {

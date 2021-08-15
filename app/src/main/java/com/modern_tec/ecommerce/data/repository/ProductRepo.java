@@ -1,4 +1,4 @@
-package com.modern_tec.ecommerce.presentation.repository;
+package com.modern_tec.ecommerce.data.repository;
 
 import android.app.Application;
 
@@ -28,6 +28,15 @@ public class ProductRepo {
         productService.getProductByName(productName);
     }
 
+    public void approveProduct(String id) {
+        productService.approveProduct(id);
+    }
+
+    public LiveData<Boolean> getIsProductApproved() {
+        return productService.getIsProductApproved();
+    }
+
+
     public void deleteProductById(String id) {
         productService.deleteProductById(id);
     }
@@ -46,6 +55,10 @@ public class ProductRepo {
 
     public void getProducts() {
         productService.getProducts();
+    }
+
+    public void getUnApprovedProducts() {
+        productService.getUnApprovedProducts();
     }
 
     public void getProductById(String id) {

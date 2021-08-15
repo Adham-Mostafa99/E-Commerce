@@ -1,4 +1,4 @@
-package com.modern_tec.ecommerce.presentation.repository;
+package com.modern_tec.ecommerce.data.repository;
 
 import android.app.Application;
 

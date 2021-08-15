@@ -1,34 +1,47 @@
 package com.modern_tec.ecommerce.presentation.ui.seller;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
 import com.modern_tec.ecommerce.R;
-import com.modern_tec.ecommerce.databinding.ActivitySellerCategoryBinding;
+import com.modern_tec.ecommerce.databinding.FragmentSellerCategoryBinding;
 import com.modern_tec.ecommerce.presentation.viewmodels.UserViewModel;
 
-public class SellerCategoryActivity extends AppCompatActivity {
+import org.jetbrains.annotations.NotNull;
 
-    private ActivitySellerCategoryBinding binding;
+public class SellerCategoryFragment extends Fragment {
+
+    private FragmentSellerCategoryBinding binding;
     public static final String CATEGORY_EXTRA = "category_extra";
 
     ImageView tShirts, sports, femaleAresses, sweather;
     ImageView glasses, pursesBags, hats, shoess;
     ImageView headphoness, laptops, watches, mobiles;
-    Button logoutBtn, checkNewOrdersBtn;
 
     UserViewModel userViewModel;
 
+
+    @Nullable
+    @org.jetbrains.annotations.Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        initBinding();
+    public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
+
+        binding = FragmentSellerCategoryBinding.inflate(inflater, container, false);
+        View view = binding.getRoot();
+
+
+
         initViews();
         initViewModels();
 
@@ -77,36 +90,7 @@ public class SellerCategoryActivity extends AppCompatActivity {
         };
         initViewsListener(onClickListener);
 
-
-//        logoutBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                userViewModel.logOut();
-//                startActivity(new Intent(SellerCategoryActivity.this, MainActivity.class)
-//                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK));
-//                finish();
-//            }
-//        });
-
-//        checkNewOrdersBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(SellerCategoryActivity.this, AdminUserOrdersActivity.class));
-//            }
-//        });
-
-//        binding.adminMaintainProductsBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                startActivity(new Intent(SellerCategoryActivity.this, AdminProductActivity.class));
-//            }
-//        });
-
-    }
-
-    private void initBinding() {
-        binding = ActivitySellerCategoryBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        return view;
     }
 
     private void initViewModels() {
@@ -126,8 +110,6 @@ public class SellerCategoryActivity extends AppCompatActivity {
         watches = binding.watches;
         mobiles = binding.mobiles;
         shoess = binding.shoess;
-//        logoutBtn = binding.adminLogoutBtn;
-//        checkNewOrdersBtn = binding.adminCheckNewOrdersBtn;
     }
 
     private void initViewsListener(View.OnClickListener onClickListener) {
@@ -146,7 +128,7 @@ public class SellerCategoryActivity extends AppCompatActivity {
     }
 
     private void intentToNewProductActivity(String category) {
-        startActivity(new Intent(this, SellerAddNewProductActivity.class)
+        startActivity(new Intent(getContext(), SellerAddNewProductActivity.class)
                 .putExtra(CATEGORY_EXTRA, category));
     }
 }

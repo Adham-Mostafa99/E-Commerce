@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData;
 
 import com.modern_tec.ecommerce.core.models.SellerUserOrders;
 import com.modern_tec.ecommerce.core.models.Order;
-import com.modern_tec.ecommerce.presentation.repository.OrderRepo;
+import com.modern_tec.ecommerce.data.repository.OrderRepo;
 
 import org.jetbrains.annotations.NotNull;
 

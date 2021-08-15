@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.modern_tec.ecommerce.R;
 import com.modern_tec.ecommerce.data.shared_pref.RememberUser;
+import com.modern_tec.ecommerce.presentation.ui.admin.AdminLoginActivity;
 import com.modern_tec.ecommerce.presentation.ui.seller.SellerRegisterActivity;
 import com.modern_tec.ecommerce.presentation.viewmodels.UserViewModel;
 import com.rey.material.widget.CheckBox;
@@ -28,7 +29,7 @@ import com.rey.material.widget.CheckBox;
 public class LoginActivity extends AppCompatActivity {
 
     EditText email, pass;
-    TextView forgetPassBtn, adminPanelLink;
+    TextView forgetPassBtn, sellerPanelLink, adminPanelLink;
     Button loginBtn;
     CheckBox remember_box;
     UserViewModel userViewModel;
@@ -44,8 +45,6 @@ public class LoginActivity extends AppCompatActivity {
         initViews();
 
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-
-
 
 
         userViewModel.getIsLogin().observe(this, aBoolean -> {
@@ -84,8 +83,16 @@ public class LoginActivity extends AppCompatActivity {
 
         });
 
-        adminPanelLink.setOnClickListener(v -> {
+        sellerPanelLink.setOnClickListener(v -> {
             startActivity(new Intent(LoginActivity.this, SellerRegisterActivity.class));
+        });
+
+        adminPanelLink.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, AdminLoginActivity.class));
+
+            }
         });
 
 
@@ -104,6 +111,7 @@ public class LoginActivity extends AppCompatActivity {
         forgetPassBtn = findViewById(R.id.forget_pass_link);
         loginBtn = findViewById(R.id.login_btn);
         remember_box = findViewById(R.id.remember_me_chkbx);
+        sellerPanelLink = findViewById(R.id.seller_panel_link);
         adminPanelLink = findViewById(R.id.admin_panel_link);
         progressDialog = new ProgressDialog(this);
 

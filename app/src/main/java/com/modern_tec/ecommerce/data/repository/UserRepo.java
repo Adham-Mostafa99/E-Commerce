@@ -1,4 +1,4 @@
-package com.modern_tec.ecommerce.presentation.repository;
+package com.modern_tec.ecommerce.data.repository;
 
 import android.app.Application;
 
@@ -32,8 +32,12 @@ public class UserRepo {
         account.loginUser(email, pass);
     }
 
-    public void loginSeller(String email, String pass) {
-        account.loginSeller(email, pass);
+    public LiveData<Boolean> loginSeller(String email, String pass) {
+        return account.loginSeller(email, pass);
+    }
+
+    public void loginAdmin(String email, String pass) {
+        account.loginAdmin(email, pass);
     }
 
     public void createSellerAccount(Seller seller) {
@@ -103,5 +107,10 @@ public class UserRepo {
 
     public void getUserInfo() {
         account.getUserInfo();
+    }
+
+
+    public void getUserInfoById(String id) {
+        account.getUserInfoById(id);
     }
 }

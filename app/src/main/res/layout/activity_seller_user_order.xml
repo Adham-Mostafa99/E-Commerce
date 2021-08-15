@@ -7,7 +7,7 @@
     tools:context=".presentation.ui.seller.SellerUserOrderActivity">
 
     <LinearLayout
-        android:id="@+id/new_order_linear_1"
+        android:id="@+id/seller_user_order_linear_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -18,19 +18,20 @@
         android:padding="12dp">
 
         <TextView
+            android:id="@+id/seller_user_orders_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="New Orders"
+            android:text="user name"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/new_order_recycler"
+        android:id="@+id/seller_user_order_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/new_order_linear_1"
+        android:layout_below="@id/seller_user_order_linear_1"
         android:layout_centerHorizontal="true"
         tools:listitem="@layout/order_item" />
 

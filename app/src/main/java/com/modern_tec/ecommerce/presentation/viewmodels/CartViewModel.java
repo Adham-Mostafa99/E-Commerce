@@ -6,7 +6,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.modern_tec.ecommerce.core.models.CartProduct;
-import com.modern_tec.ecommerce.presentation.repository.CartRepo;
+import com.modern_tec.ecommerce.data.repository.CartRepo;
 
 import java.util.ArrayList;
 

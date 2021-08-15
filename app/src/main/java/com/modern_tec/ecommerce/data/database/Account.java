@@ -35,6 +35,7 @@ public class Account {
     private Context context;
     private final String parentUserDbName = "Users";
     private final String parentSellerDbName = "Sellers";
+    private final String parentAdminDbName = "Admins";
     private static final String USERS_IMAGES_FOLDER_NAME = "User Images";
 
     private final FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -124,7 +125,39 @@ public class Account {
                 });
     }
 
-    public void loginSeller(String email, String pass) {
+    public void loginAdmin(String email, String pass) {
+        rootRef
+                .child(parentAdminDbName)
+                .orderByChild("email")
+                .equalTo(email)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            auth.signInWithEmailAndPassword(email, pass)
+                                    .addOnCompleteListener(task -> {
+                                        if (task.isSuccessful()) {
+                                            Toast.makeText(context, "Logged in successfully...", Toast.LENGTH_SHORT).show();
+                                            isLogin.setValue(true);
+                                        } else {
+                                            Toast.makeText(context, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                            isLogin.setValue(false);
+                                        }
+                                    });
+                        } else {
+                            Toast.makeText(context, "No Admin with this Account", Toast.LENGTH_SHORT).show();
+                            isLogin.setValue(false);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                    }
+                });
+    }
+
+    public LiveData<Boolean> loginSeller(String email, String pass) {
         rootRef
                 .child(parentSellerDbName)
                 .orderByChild("email")
@@ -143,8 +176,7 @@ public class Account {
                                             isLogin.setValue(false);
                                         }
                                     });
-                        }
-                        else {
+                        } else {
                             Toast.makeText(context, "No Seller with this Account", Toast.LENGTH_SHORT).show();
                             isLogin.setValue(false);
                         }
@@ -156,6 +188,8 @@ public class Account {
                         isLogin.setValue(false);
                     }
                 });
+
+        return isLogin;
     }
 
     public void loginUser(String email, String pass) {
@@ -183,7 +217,7 @@ public class Account {
                                             isLogin.setValue(false);
                                         }
                                     });
-                        }else {
+                        } else {
                             Toast.makeText(context, "No User with this Account", Toast.LENGTH_SHORT).show();
                             isLogin.setValue(false);
                         }
@@ -246,6 +280,25 @@ public class Account {
                     }
                 });
 
+    }
+
+    public void getUserInfoById(String id) {
+        rootRef.child(parentUserDbName)
+                .child(id)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            User user = snapshot.getValue(User.class);
+                            userMutableLiveData.setValue(user);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                    }
+                });
     }
 
     public void getUserInfo() {

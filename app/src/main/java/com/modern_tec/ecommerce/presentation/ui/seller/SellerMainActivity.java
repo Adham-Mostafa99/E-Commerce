@@ -2,6 +2,7 @@ package com.modern_tec.ecommerce.presentation.ui.seller;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -9,6 +10,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.modern_tec.ecommerce.R;
@@ -23,19 +25,22 @@ public class SellerMainActivity extends AppCompatActivity {
     private ActivitySellerMainBinding binding;
     private UserViewModel userViewModel;
 
-    private BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private final BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
+            Fragment currentFragment = null;
+
+
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    startActivity(new Intent(SellerMainActivity.this, SellerHomeActivity.class));
-                    return true;
+                    currentFragment = new SellerHomeFragment();
+                    break;
                 case R.id.navigation_orders:
-                    startActivity(new Intent(SellerMainActivity.this, SellerAllUsersOrdersActivity.class));
-                    return true;
+                    currentFragment = new SellerAllUsersOrdersFragment();
+                    break;
                 case R.id.navigation_add:
-                    startActivity(new Intent(SellerMainActivity.this, SellerCategoryActivity.class));
-                    return true;
+                    currentFragment = new SellerCategoryFragment();
+                    break;
                 case R.id.navigation_logout:
                     userViewModel.logOut();
                     startActivity(new Intent(SellerMainActivity.this, MainActivity.class)
@@ -43,7 +48,12 @@ public class SellerMainActivity extends AppCompatActivity {
                     finish();
                     return true;
             }
-            return false;
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.seller_main_frame, currentFragment)
+                    .commit();
+
+            return true;
         }
     };
 
@@ -52,8 +62,12 @@ public class SellerMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         initBinding();
         initViewModels();
-
         binding.navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
+
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.seller_main_frame, new SellerHomeFragment())
+                .commit();
 
     }
 

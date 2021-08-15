@@ -9,14 +9,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.modern_tec.ecommerce.core.models.CartProduct;
 import com.modern_tec.ecommerce.core.models.Order;
+import com.modern_tec.ecommerce.core.models.User;
 import com.modern_tec.ecommerce.databinding.ActivitySellerUserOrderBinding;
 import com.modern_tec.ecommerce.presentation.adapters.OrderAdapter;
 import com.modern_tec.ecommerce.presentation.viewmodels.OrderViewModel;
+import com.modern_tec.ecommerce.presentation.viewmodels.UserViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ public class SellerUserOrderActivity extends AppCompatActivity {
     private OrderAdapter orderAdapter;
     private AlertDialog.Builder builder;
     private OrderViewModel orderViewModel;
+    private UserViewModel userViewModel;
     private String userId;
 
     @Override
@@ -38,17 +40,24 @@ public class SellerUserOrderActivity extends AppCompatActivity {
         initViewModels();
         initViews();
 
-        userId = getIntent().getStringExtra(SellerAllUsersOrdersActivity.USER_ID_EXTRA);
+        userId = getIntent().getStringExtra(SellerAllUsersOrdersFragment.USER_ID_EXTRA);
+
 
         if (userId != null) {
-            Log.v("TAG", "id:" + userId);
+            userViewModel.getUserInfoById(userId);
             orderViewModel.getAdminUserOrdersById(userId);
         }
+
+        userViewModel.getUserLiveData().observe(this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                binding.sellerUserOrdersName.setText(user.getName());
+            }
+        });
 
         orderViewModel.getUserOrderLiveData().observe(this, new Observer<List<Order>>() {
             @Override
             public void onChanged(List<Order> orders) {
-                Log.v("TAG", orders.size() + "");
                 orderAdapter.submitList(orders);
             }
         });
@@ -63,9 +72,9 @@ public class SellerUserOrderActivity extends AppCompatActivity {
 
     private void initAdapter() {
         orderAdapter = new OrderAdapter();
-        binding.newOrderRecycler.setLayoutManager(new LinearLayoutManager(this));
-        binding.newOrderRecycler.setHasFixedSize(true);
-        binding.newOrderRecycler.setAdapter(orderAdapter);
+        binding.sellerUserOrderRecycler.setLayoutManager(new LinearLayoutManager(this));
+        binding.sellerUserOrderRecycler.setHasFixedSize(true);
+        binding.sellerUserOrderRecycler.setAdapter(orderAdapter);
         onCLickItem();
         onOrderClick();
     }
@@ -98,6 +107,7 @@ public class SellerUserOrderActivity extends AppCompatActivity {
 
     private void initViewModels() {
         orderViewModel = ViewModelProviders.of(this).get(OrderViewModel.class);
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
     }
 
     private void openAlertDialog(String title, Order order) {

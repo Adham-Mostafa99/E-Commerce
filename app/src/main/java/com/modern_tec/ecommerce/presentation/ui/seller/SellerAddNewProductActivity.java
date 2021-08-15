@@ -67,11 +67,11 @@ public class SellerAddNewProductActivity extends AppCompatActivity {
                 progressDialog.dismiss();
                 Toast.makeText(SellerAddNewProductActivity.this, "Successfully...", Toast.LENGTH_SHORT).show();
                 finish();
-                startActivity(new Intent(SellerAddNewProductActivity.this, SellerCategoryActivity.class));
+                startActivity(new Intent(SellerAddNewProductActivity.this, SellerCategoryFragment.class));
             }
         });
 
-        categoryName = getIntent().getExtras().get(SellerCategoryActivity.CATEGORY_EXTRA).toString();
+        categoryName = getIntent().getExtras().get(SellerCategoryFragment.CATEGORY_EXTRA).toString();
         if (!categoryName.isEmpty())
             setProductImage(categoryName);
 

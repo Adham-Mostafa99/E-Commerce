@@ -32,6 +32,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private double discount = 0;
     double total = 0;
 
+    //TODO add more details about product like seller name...
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +40,7 @@ public class ProductDetailsActivity extends AppCompatActivity {
         initViewModels();
 
         product = (Product) getIntent().getSerializableExtra(HomeActivity.CLICKED_ITEM_EXTRA);
-        if (product!= null) {
+        if (product != null) {
             displayProductInfo();
         } else {
             cartProduct = (CartProduct) getIntent().getSerializableExtra(CartActivity.EDIT_CART_ITEM_EXTRA);

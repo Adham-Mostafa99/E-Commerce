@@ -9,7 +9,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.modern_tec.ecommerce.core.models.Seller;
 import com.modern_tec.ecommerce.core.models.User;
-import com.modern_tec.ecommerce.presentation.repository.UserRepo;
+import com.modern_tec.ecommerce.data.repository.UserRepo;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -42,8 +42,12 @@ public class UserViewModel extends AndroidViewModel {
         userRepo.loginUser(email, pass);
     }
 
-    public void loginSeller(String email, String pass) {
-        userRepo.loginSeller(email, pass);
+    public LiveData<Boolean> loginSeller(String email, String pass) {
+        return userRepo.loginSeller(email, pass);
+    }
+
+    public void loginAdmin(String email, String pass) {
+        userRepo.loginAdmin(email, pass);
     }
 
     public void logOut() {
@@ -83,6 +87,10 @@ public class UserViewModel extends AndroidViewModel {
 
     public void getUserInfo() {
         userRepo.getUserInfo();
+    }
+
+    public void getUserInfoById(String id) {
+        userRepo.getUserInfoById(id);
     }
 
     public LiveData<Boolean> getIsCheckedCreated() {

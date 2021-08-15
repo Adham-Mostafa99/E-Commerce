@@ -24,7 +24,7 @@ public class AdminProductActivity extends AppCompatActivity {
     ProductViewModel productViewModel;
     public static final String PRODUCT_EXTRA = "product_extra";
 
-
+    //TODO add logout button
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,12 +32,11 @@ public class AdminProductActivity extends AppCompatActivity {
         initAdapter();
         initViewModels();
 
-        productViewModel.getProducts();
+        productViewModel.getUnApprovedProducts();
 
         productViewModel.getProductLiveData().observe(this, new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> product) {
-                Log.v("TAG", product.get(0).getProductName());
                 adapter.submitList(product);
             }
         });
@@ -57,18 +56,20 @@ public class AdminProductActivity extends AppCompatActivity {
         setOnClickItem();
     }
 
-    private void setOnClickItem() {
-        adapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(Product product) {
-                startActivity(new Intent(AdminProductActivity.this, SellerMaintainProductActivity.class)
-                        .putExtra(PRODUCT_EXTRA, product));
-            }
-        });
-    }
 
     private void initBinding() {
         binding = ActivityAdminProductBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+    }
+
+
+    private void setOnClickItem() {
+        adapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Product product) {
+                startActivity(new Intent(AdminProductActivity.this, AdminUnApprovedProductDetailsActivity.class)
+                        .putExtra(PRODUCT_EXTRA, product));
+            }
+        });
     }
 }

@@ -3,9 +3,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.ui.seller.SellerHomeActivity">
+    >
+
+    <TextView
+        android:id="@+id/no_orders"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="No orders to show."
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
     <LinearLayout
-        android:id="@+id/seller_products_linear_1"
+        android:id="@+id/admin_user_orders_linear_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -18,18 +29,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Products"
+            android:text="Users Orders"
             android:textColor="@color/white"
             android:textSize="24sp"
             android:textStyle="bold" />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/seller_product_recycler"
+        android:id="@+id/admin_user_orders_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/seller_products_linear_1"
-        android:layout_centerInParent="true"
-        android:scrollbars="vertical"
-        tools:listitem="@layout/seller_product_item" />
+        android:layout_below="@id/admin_user_orders_linear_1"
+        android:layout_centerHorizontal="true"
+        tools:listitem="@layout/user_orders_item" />
+
 </RelativeLayout>
