@@ -2,13 +2,39 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
+
+
+    <ImageView
+        android:id="@+id/order_back_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="26dp"
+        android:src="@drawable/ic_baseline_keyboard_backspace" />
+
+    <TextView
+        android:id="@+id/order_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/order_back_arrow"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="18dp"
+        android:fontFamily="@font/arsenal"
+        android:text="Orders"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/order_fragment_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_centerInParent="true"
+        android:layout_marginTop="10dp"
+        android:layout_below="@id/order_txt"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         tools:listitem="@layout/order_item" />
 
 </RelativeLayout>

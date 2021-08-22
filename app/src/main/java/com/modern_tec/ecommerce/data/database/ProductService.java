@@ -168,6 +168,46 @@ public class ProductService {
                 });
     }
 
+    public LiveData<List<Product>> getProductsByCategory(String category) {
+        MutableLiveData<List<Product>> productListLiveData = new MutableLiveData<>();
+        productReference
+                .child(PRODUCT_REF_NAME)
+                .orderByChild("productState")
+                .equalTo("Approved")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        snapshot.getRef()
+                                .orderByChild("productCategory")
+                                .equalTo(category)
+                                .addValueEventListener(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                                        ArrayList<Product> productArrayList = new ArrayList<>();
+                                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                            if (dataSnapshot.exists()) {
+                                                Product currentProduct = dataSnapshot.getValue(Product.class);
+                                                productArrayList.add(currentProduct);
+                                            }
+                                        }
+                                        productListLiveData.setValue(productArrayList);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                                    }
+                                });
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                    }
+                });
+
+        return productListLiveData;
+    }
 
     public void getSellerProducts(String sellerId) {
         productReference

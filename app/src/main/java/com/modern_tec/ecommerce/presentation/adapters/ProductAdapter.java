@@ -63,7 +63,7 @@ public class ProductAdapter extends ListAdapter<Product, ProductAdapter.ViewHold
 
         holder.productName.setText(currentProduct.getProductName());
         holder.productPrice.setText(currentProduct.getProductPrice() + " EG");
-        holder.productDescription.setText(currentProduct.getProductDescription());
+//        holder.productDescription.setText(currentProduct.getProductDescription());
 
         Glide
                 .with(context)
@@ -79,14 +79,14 @@ public class ProductAdapter extends ListAdapter<Product, ProductAdapter.ViewHold
         TextView productName;
         ImageView productImage;
         TextView productPrice;
-        TextView productDescription;
+//        TextView productDescription;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
             super(itemView);
 
             productName = itemView.findViewById(R.id.item_product_name);
             productImage = itemView.findViewById(R.id.item_product_image);
-            productDescription = itemView.findViewById(R.id.item_product_desc);
+//            productDescription = itemView.findViewById(R.id.item_product_desc);
             productPrice = itemView.findViewById(R.id.item_product_price);
 
             itemView.setOnClickListener(new View.OnClickListener() {

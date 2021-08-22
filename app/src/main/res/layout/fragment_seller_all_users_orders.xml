@@ -11,36 +11,16 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:text="No orders to show."
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/seller"
         android:textSize="20sp"
         android:textStyle="bold" />
 
-    <LinearLayout
-        android:id="@+id/admin_user_orders_linear_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="12dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Users Orders"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/admin_user_orders_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/admin_user_orders_linear_1"
-        android:layout_centerHorizontal="true"
+        android:layout_centerInParent="true"
         tools:listitem="@layout/user_orders_item" />
 
 </RelativeLayout>

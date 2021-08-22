@@ -9,6 +9,8 @@ import java.io.Serializable;
 public class CartProduct implements Parcelable, Serializable {
     private String productId;
     private String productName;
+    private String productImage;
+    private String productSeller;
     private double productPrice;
     private String productDate;
     private String productTime;
@@ -16,11 +18,12 @@ public class CartProduct implements Parcelable, Serializable {
     private double productDiscount;
     private double productTotalPrice;
 
-    public CartProduct(String productId, String productName, double productPrice, String productDate,
-                       String productTime, int productQuantity, double productDiscount
-            , double productTotalPrice) {
+
+    public CartProduct(String productId, String productName, String productImage, String productSeller, double productPrice, String productDate, String productTime, int productQuantity, double productDiscount, double productTotalPrice) {
         this.productId = productId;
         this.productName = productName;
+        this.productImage = productImage;
+        this.productSeller = productSeller;
         this.productPrice = productPrice;
         this.productDate = productDate;
         this.productTime = productTime;
@@ -35,6 +38,8 @@ public class CartProduct implements Parcelable, Serializable {
     protected CartProduct(Parcel in) {
         productId = in.readString();
         productName = in.readString();
+        productImage = in.readString();
+        productSeller = in.readString();
         productPrice = in.readDouble();
         productDate = in.readString();
         productTime = in.readString();
@@ -54,6 +59,19 @@ public class CartProduct implements Parcelable, Serializable {
             return new CartProduct[size];
         }
     };
+
+    public void setProductQuantity(int productQuantity) {
+        this.productQuantity = productQuantity;
+    }
+
+    public String getProductImage() {
+        return productImage;
+    }
+
+    public String getProductSeller() {
+        return productSeller;
+    }
+
 
     public String getProductId() {
         return productId;
@@ -87,19 +105,6 @@ public class CartProduct implements Parcelable, Serializable {
         return productTotalPrice;
     }
 
-    @Override
-    public String toString() {
-        return "CartProduct{" +
-                "productId='" + productId + '\'' +
-                ", productName='" + productName + '\'' +
-                ", productPrice=" + productPrice +
-                ", productDate='" + productDate + '\'' +
-                ", productTime='" + productTime + '\'' +
-                ", productQuantity=" + productQuantity +
-                ", productDiscount=" + productDiscount +
-                ", productTotalPrice=" + productTotalPrice +
-                '}';
-    }
 
     @Override
     public int describeContents() {
@@ -110,6 +115,8 @@ public class CartProduct implements Parcelable, Serializable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(productId);
         dest.writeString(productName);
+        dest.writeString(productImage);
+        dest.writeString(productSeller);
         dest.writeDouble(productPrice);
         dest.writeString(productDate);
         dest.writeString(productTime);

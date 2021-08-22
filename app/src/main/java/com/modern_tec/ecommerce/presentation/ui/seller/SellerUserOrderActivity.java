@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import com.modern_tec.ecommerce.core.models.CartProduct;
@@ -16,6 +17,7 @@ import com.modern_tec.ecommerce.core.models.Order;
 import com.modern_tec.ecommerce.core.models.User;
 import com.modern_tec.ecommerce.databinding.ActivitySellerUserOrderBinding;
 import com.modern_tec.ecommerce.presentation.adapters.OrderAdapter;
+import com.modern_tec.ecommerce.presentation.adapters.SellerOrdersAdapter;
 import com.modern_tec.ecommerce.presentation.viewmodels.OrderViewModel;
 import com.modern_tec.ecommerce.presentation.viewmodels.UserViewModel;
 
@@ -26,10 +28,8 @@ public class SellerUserOrderActivity extends AppCompatActivity {
 
     private ActivitySellerUserOrderBinding binding;
     public static final String PRODUCT_LIST = "product list";
-    private OrderAdapter orderAdapter;
-    private AlertDialog.Builder builder;
+    private SellerOrdersAdapter orderAdapter;
     private OrderViewModel orderViewModel;
-    private UserViewModel userViewModel;
     private String userId;
 
     @Override
@@ -38,22 +38,21 @@ public class SellerUserOrderActivity extends AppCompatActivity {
         initBinding();
         initAdapter();
         initViewModels();
-        initViews();
+
+        binding.orderBackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
 
         userId = getIntent().getStringExtra(SellerAllUsersOrdersFragment.USER_ID_EXTRA);
 
 
         if (userId != null) {
-            userViewModel.getUserInfoById(userId);
             orderViewModel.getAdminUserOrdersById(userId);
         }
 
-        userViewModel.getUserLiveData().observe(this, new Observer<User>() {
-            @Override
-            public void onChanged(User user) {
-                binding.sellerUserOrdersName.setText(user.getName());
-            }
-        });
 
         orderViewModel.getUserOrderLiveData().observe(this, new Observer<List<Order>>() {
             @Override
@@ -71,7 +70,7 @@ public class SellerUserOrderActivity extends AppCompatActivity {
     }
 
     private void initAdapter() {
-        orderAdapter = new OrderAdapter();
+        orderAdapter = new SellerOrdersAdapter();
         binding.sellerUserOrderRecycler.setLayoutManager(new LinearLayoutManager(this));
         binding.sellerUserOrderRecycler.setHasFixedSize(true);
         binding.sellerUserOrderRecycler.setAdapter(orderAdapter);
@@ -80,21 +79,22 @@ public class SellerUserOrderActivity extends AppCompatActivity {
     }
 
     private void onCLickItem() {
-        orderAdapter.setOnItemClickListener(new OrderAdapter.OnItemClickListener() {
+        orderAdapter.setOnItemClickListener(new SellerOrdersAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Order order) {
-                startActivity(new Intent(SellerUserOrderActivity.this, SellerUserProductsActivity.class)
-                        .putParcelableArrayListExtra(PRODUCT_LIST, (ArrayList<CartProduct>) order.getCartProductList()));
+                orderViewModel.makeOrderShipped(userId, order.getOrderId());
+
             }
         });
 
     }
 
     private void onOrderClick() {
-        orderAdapter.setOnOrderClickListener(new OrderAdapter.OnOrderClickListener() {
+        orderAdapter.setOnOrderClickListener(new SellerOrdersAdapter.OnOrderClickListener() {
             @Override
             public void onOrderClick(Order order) {
-                openAlertDialog("Have you shipped this order?", order);
+                startActivity(new Intent(SellerUserOrderActivity.this, SellerUserProductsActivity.class)
+                        .putParcelableArrayListExtra(PRODUCT_LIST, (ArrayList<CartProduct>) order.getCartProductList()));
             }
         });
     }
@@ -107,32 +107,7 @@ public class SellerUserOrderActivity extends AppCompatActivity {
 
     private void initViewModels() {
         orderViewModel = ViewModelProviders.of(this).get(OrderViewModel.class);
-        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
     }
 
-    private void openAlertDialog(String title, Order order) {
-        CharSequence options[] = new CharSequence[]{
-                "Yes",
-                "No"
-        };
-        builder.setTitle(title);
-        builder.setItems(options, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0://YES
-                        orderViewModel.makeOrderShipped(userId, order.getOrderId());
-                        break;
-                    case 1://NO
-                    default:
-                        break;
-                }
-            }
-        });
-        builder.show();
-    }
 
-    private void initViews() {
-        builder = new AlertDialog.Builder(this);
-    }
 }

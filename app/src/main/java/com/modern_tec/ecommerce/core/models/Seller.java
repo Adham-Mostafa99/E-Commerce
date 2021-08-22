@@ -1,10 +1,12 @@
 package com.modern_tec.ecommerce.core.models;
 
+import java.util.List;
+
 public class Seller extends User {
     private String phone;
     private String password;
 
-    public Seller(String email, String name, String photoUrl, String address, String phone, String password) {
+    public Seller(String email, String name, String photoUrl, List<Address> address, String phone, String password) {
         super(email, name, photoUrl, address);
         this.phone = phone;
         this.password = password;

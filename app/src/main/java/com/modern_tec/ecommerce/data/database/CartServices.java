@@ -73,7 +73,6 @@ public class CartServices {
                     @Override
                     public void onComplete(@NonNull @NotNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(context, cartProduct.getProductName() + "is added to cart", Toast.LENGTH_SHORT).show();
                             isProductAddedToCart.setValue(true);
                         }
                     }

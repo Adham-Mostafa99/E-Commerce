@@ -1,5 +1,6 @@
 package com.modern_tec.ecommerce.presentation.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.modern_tec.ecommerce.R;
 import com.modern_tec.ecommerce.core.models.Order;
+import com.modern_tec.ecommerce.databinding.OrderItemBinding;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -28,11 +30,9 @@ public class OrderAdapter extends ListAdapter<Order, OrderAdapter.ViewHolder> {
 
         @Override
         public boolean areContentsTheSame(@NonNull @NotNull Order oldItem, @NonNull @NotNull Order newItem) {
-            return (oldItem.getUserName().equals(newItem.getUserName()) &&
-                    oldItem.getUserEmail().equals(newItem.getUserEmail()) &&
-                    oldItem.getUserAddress().equals(newItem.getUserAddress()) &&
-                    oldItem.getUserCity().equals(newItem.getUserCity()) &&
-                    oldItem.getUserPhone().equals(newItem.getUserPhone()) &&
+            return (oldItem.getOrderId().equals(newItem.getOrderId()) &&
+                    oldItem.getUserName().equals(newItem.getUserName()) &&
+                    oldItem.getUserAddress().getAddressId().equals(newItem.getUserAddress().getAddressId()) &&
                     oldItem.getOrderDate().equals(newItem.getOrderDate()) &&
                     oldItem.getOrderTime().equals(newItem.getOrderTime()) &&
                     oldItem.getState().equals(newItem.getState()) &&
@@ -58,62 +58,48 @@ public class OrderAdapter extends ListAdapter<Order, OrderAdapter.ViewHolder> {
     @NotNull
     @Override
     public OrderAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.order_item, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(OrderItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull OrderAdapter.ViewHolder holder, int position) {
         Order order = getItem(position);
-        holder.userName.setText("Name: " + order.getUserName());
-        holder.userEmail.setText("Email: " + order.getUserEmail());
-        holder.userPhone.setText("Phone: " + order.getUserPhone());
-        holder.userAddress.setText("Shipping Address: " + order.getUserAddress());
-        holder.userCity.setText("City: " + order.getUserCity());
-        holder.orderPrice.setText("Total Price: " + order.getTotalPrice() + " EG");
-        holder.orderDate.setText("Date of Order: " + order.getOrderDate() + "-" + order.getOrderTime());
+
+        holder.binding.orderItemId.setText(order.getOrderId());
+        holder.binding.orderItemName.setText(order.getUserName());
+        holder.binding.orderItemTime.setText(order.getOrderTime());
+        holder.binding.orderItemDate.setText(order.getOrderDate());
+        holder.binding.orderItemAddressLane.setText(order.getUserAddress().getAddressName());
+        holder.binding.orderItemCity.setText(order.getUserAddress().getCity());
+        holder.binding.orderItemPhone.setText(order.getUserAddress().getPhone());
+        holder.binding.orderItemPrice.setText(order.getTotalPrice() + " EG");
+
+
+        holder.binding.orderAgainBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null && position != RecyclerView.NO_POSITION) {
+                    onItemClickListener.onItemClick(order);
+                }
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onOrderClickListener != null && position != RecyclerView.NO_POSITION) {
+                    onOrderClickListener.onOrderClick(order);
+                }
+            }
+        });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView userName;
-        TextView userEmail;
-        TextView userPhone;
-        TextView userAddress;
-        TextView userCity;
-        TextView orderPrice;
-        TextView orderDate;
-        Button orderShowProductsBtn;
+        OrderItemBinding binding;
 
-        public ViewHolder(@NonNull @NotNull View itemView) {
-            super(itemView);
-
-            userName = itemView.findViewById(R.id.item_order_user_name);
-            userEmail = itemView.findViewById(R.id.item_order_user_email);
-            userPhone = itemView.findViewById(R.id.item_order_user_phone);
-            userAddress = itemView.findViewById(R.id.item_order_user_address);
-            userCity = itemView.findViewById(R.id.item_order_user_city);
-            orderPrice = itemView.findViewById(R.id.item_order_total_price);
-            orderDate = itemView.findViewById(R.id.item_order_date_time);
-            orderShowProductsBtn = itemView.findViewById(R.id.item_order_show_details_btn);
-
-
-            orderShowProductsBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onItemClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
-                        onItemClickListener.onItemClick(getItem(getAdapterPosition()));
-                    }
-                }
-            });
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onOrderClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
-                        onOrderClickListener.onOrderClick(getItem(getAdapterPosition()));
-                    }
-                }
-            });
+        public ViewHolder(@NonNull @NotNull OrderItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
         }
 
     }

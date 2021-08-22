@@ -4,16 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".presentation.ui.buyers.ProductDetailsActivity">
+
+    <ImageView
+        android:id="@+id/product_details_back_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="26dp"
+        android:src="@drawable/ic_baseline_keyboard_backspace" />
+
 
     <ImageView
         android:id="@+id/product_image_details"
         android:layout_width="match_parent"
         android:layout_height="260dp"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/product_details_back_arrow"
         android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="30dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/place_holder" />
+        android:src="@drawable/product_placeholder" />
 
     <TextView
         android:id="@+id/product_name_details"
@@ -21,91 +33,137 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/product_image_details"
         android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="15dp"
+        android:layout_marginHorizontal="24dp"
+        android:text="Black turtleneck top"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/product_price_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/product_name_details"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="24dp"
         android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="Product Name"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:text="1500.0 EG"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/product_seller_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/product_name_details"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="10dp"
+        android:layout_toEndOf="@id/product_price_details"
+        android:text="Next Shop"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+    <ImageView
+        android:id="@+id/line_1"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/product_price_details"
+        android:layout_marginVertical="24dp"
+        android:src="@color/borders" />
+
+
+    <TextView
+        android:id="@+id/txt_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/line_1"
+        android:layout_marginHorizontal="24dp"
+        android:text="Description"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/product_desc_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/product_name_details"
+        android:layout_below="@id/txt_desc"
         android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="15dp"
+        android:layout_marginHorizontal="24dp"
         android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="Product Description"
-        android:textSize="16sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/product_price_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/product_desc_details"
-        android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="1500.0 EG"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:text="A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine."
+        android:textSize="14sp" />
 
 
-    <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
-        android:id="@+id/product_number_increase_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/product_price_details"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:elevation="6dp"
-        app:finalNumber="10"
-        app:initialNumber="0"
-        app:textSize="16sp" />
+    <!--    <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton-->
+    <!--        android:id="@+id/product_number_increase_btn"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@id/product_desc_details"-->
+    <!--        android:layout_centerHorizontal="true"-->
+    <!--        android:layout_marginTop="10dp"-->
+    <!--        android:elevation="6dp"-->
+    <!--        app:finalNumber="10"-->
+    <!--        app:initialNumber="0"-->
+    <!--        app:textSize="16sp" />-->
+
+    <!--    <LinearLayout-->
+    <!--        android:id="@+id/linear_total_1"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@id/product_number_increase_btn"-->
+    <!--        android:layout_centerHorizontal="true"-->
+    <!--        android:layout_marginTop="10dp"-->
+    <!--        android:gravity="center"-->
+    <!--        android:orientation="horizontal">-->
+
+    <!--        <TextView-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:gravity="center"-->
+    <!--            android:text="Total Price: "-->
+    <!--            android:textSize="16sp"-->
+    <!--            android:textStyle="bold" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/product_total_price_details"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:gravity="center"-->
+    <!--            android:text="00.0 EG"-->
+    <!--            android:textSize="16sp"-->
+    <!--            android:textStyle="bold" />-->
+
+    <!--    </LinearLayout>-->
+
 
     <LinearLayout
-        android:id="@+id/linear_total_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/product_number_increase_btn"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Total Price: "
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/product_total_price_details"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="00.0 EG"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/att_product_to_cart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="15dp"
-        android:background="@color/colorPrimary"
-        android:elevation="6dp"
-        android:text="Add to Cart"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/add_product_to_cart"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@color/gray"
+            android:text="Add to Cart"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/buy_now_btn"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:text="Buy Now"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+
+
 </RelativeLayout>

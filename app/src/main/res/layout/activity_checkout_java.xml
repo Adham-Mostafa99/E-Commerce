@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fillViewport="true"
+    tools:context=".presentation.ui.buyers.CheckoutActivityJava"
+
+    >
+
+    <ImageView
+        android:id="@+id/check_out_back_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="26dp"
+        android:src="@drawable/ic_baseline_keyboard_backspace" />
+
+    <TextView
+        android:id="@+id/check_out_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/check_out_back_arrow"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/arsenal"
+        android:text="Checkout"
+        android:textColor="@color/black"
+        android:textSize="30sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/check_out_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_below="@id/check_out_txt"
+        android:layout_marginTop="10dp"
+        tools:listitem="@layout/cart_item" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/check_out_btn"
+        android:layout_below="@id/check_out_recycler"
+        android:layout_marginBottom="24dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/check_out_address_details"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="12dp"
+                android:maxEms="10"
+                android:text="Shewrapara, Mirpur, Dhaka-1216"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/check_out_address_city"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/check_out_address_details"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
+                android:maxEms="10"
+                android:text="Cairo"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+
+            <TextView
+                android:id="@+id/check_out_address_postal_code"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/check_out_address_city"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
+                android:maxEms="10"
+                android:text="44452"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/check_out_address_phone"
+                android:layout_width="260dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/check_out_address_postal_code"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
+                android:maxEms="10"
+                android:text="011145255"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/border_1"
+                android:layout_width="match_parent"
+                android:layout_height="0.35dp"
+                android:layout_below="@id/check_out_address_phone"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginVertical="18dp"
+                android:src="@color/borders" />
+
+            <TextView
+                android:id="@+id/check_out_subtotal_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/border_1"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:maxEms="10"
+                android:text="Subtotal"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/check_out_subtotal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/border_1"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="24dp"
+                android:maxEms="10"
+                android:text="1500 EG"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+
+            <TextView
+                android:id="@+id/check_out_discount_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/check_out_subtotal_txt"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
+                android:maxEms="10"
+                android:text="Discount"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/check_out_discount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/check_out_subtotal"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="24dp"
+                android:maxEms="10"
+                android:text="0%"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/check_out_shipping_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/check_out_discount_txt"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="4dp"
+                android:maxEms="10"
+                android:text="Shipping"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/check_out_shipping"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/check_out_discount"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="4dp"
+                android:layout_marginEnd="24dp"
+                android:maxEms="10"
+                android:text="25 EG"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:id="@+id/border_2"
+                android:layout_width="match_parent"
+                android:layout_height="0.35dp"
+                android:layout_below="@id/check_out_shipping"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginVertical="18dp"
+                android:src="@color/borders" />
+
+            <TextView
+                android:id="@+id/check_out_total_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/border_2"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="24dp"
+                android:maxEms="10"
+                android:text="Total"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/check_out_total"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/border_2"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="24dp"
+                android:maxEms="10"
+                android:text="1525 EG"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+        </RelativeLayout>
+    </ScrollView>
+
+
+    <Button
+        android:id="@+id/check_out_btn"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="34dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/buttons"
+        android:text="Buy"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="18sp" />
+</RelativeLayout>

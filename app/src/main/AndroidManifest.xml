@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.modern_tec.ecommerce">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -14,42 +15,46 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ecommerce"
-        tools:replace="android:theme">
-        <activity android:name=".presentation.ui.admin.AdminUnApprovedProductDetailsActivity"></activity>
-        <activity android:name=".presentation.ui.admin.AdminLoginActivity" />
-        <activity android:name=".presentation.ui.seller.SellerHomeFragment" />
+        tools:replace="android:theme,android:supportsRtl">
+        <activity android:name=".presentation.ui.buyers.EditInformationActivity"></activity>
+        <activity android:name=".presentation.ui.buyers.ProfileActivity" />
+        <activity android:name=".presentation.ui.buyers.ConfirmationActivity" />
+        <activity android:name=".presentation.ui.buyers.CreateAddressActivity" />
+        <activity android:name=".presentation.ui.buyers.BuyerAddressActivity" />
+        <activity android:name=".presentation.ui.buyers.FeaturesActivity" />
         <activity
-            android:name=".presentation.ui.seller.SellerMainActivity"
-            android:label="@string/title_activity_seller_home" />
-        <activity android:name=".presentation.ui.seller.SellerLoginActivity" />
-        <activity android:name=".presentation.ui.seller.SellerRegisterActivity" />
-        <activity android:name=".presentation.ui.buyers.UserOrderProductsActivity" />
-        <activity android:name=".presentation.ui.buyers.OrdersActivity" />
-        <activity android:name=".presentation.ui.seller.SellerMaintainProductActivity" />
-        <activity android:name=".presentation.ui.admin.AdminProductActivity" />
-        <activity android:name=".presentation.ui.buyers.SearchProductActivity" />
-        <activity android:name=".presentation.ui.seller.SellerUserProductsActivity" />
-        <activity android:name=".presentation.ui.seller.SellerAllUsersOrdersFragment" />
-        <activity android:name=".presentation.ui.seller.SellerUserOrderActivity" />
-        <activity android:name=".presentation.ui.buyers.ConfirmFinalOrderActivity" />
-        <activity android:name=".presentation.ui.buyers.CartActivity" />
-        <activity android:name=".presentation.ui.buyers.ProductDetailsActivity" />
-        <activity android:name=".presentation.ui.buyers.SettingsActivity" />
-        <activity
-            android:name=".presentation.ui.buyers.HomeActivity"
-            android:label="@string/title_activity_home"
-            android:theme="@style/Theme.Ecommerce.NoActionBar" />
-        <activity android:name=".presentation.ui.seller.SellerCategoryFragment" />
-        <activity android:name=".presentation.ui.seller.SellerAddNewProductActivity" />
-        <activity android:name=".presentation.ui.buyers.RegisterActivity" />
-        <activity android:name=".presentation.ui.buyers.LoginActivity" />
-        <activity android:name=".presentation.ui.MainActivity">
+            android:name=".presentation.ui.SplashActivity"
+            android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".presentation.ui.buyers.CheckoutActivityJava" />
+        <activity android:name=".presentation.ui.buyers.PaymentActivity" />
+        <activity android:name=".presentation.ui.admin.AdminUnApprovedProductDetailsActivity" />
+        <activity android:name=".presentation.ui.admin.AdminLoginActivity" />
+        <activity
+            android:name=".presentation.ui.seller.SellerMainActivity"
+            android:label="@string/title_activity_seller_home" />
+        <activity android:name=".presentation.ui.buyers.UserOrderProductsActivity" />
+        <activity android:name=".presentation.ui.buyers.OrdersActivity" />
+        <activity android:name=".presentation.ui.seller.SellerMaintainProductActivity" />
+        <activity android:name=".presentation.ui.admin.AdminProductActivity" />
+        <activity android:name=".presentation.ui.buyers.SearchProductActivity" />
+        <activity android:name=".presentation.ui.seller.SellerUserProductsActivity" />
+        <activity android:name=".presentation.ui.seller.SellerUserOrderActivity" />
+        <activity android:name=".presentation.ui.buyers.CartActivity" />
+        <activity android:name=".presentation.ui.buyers.ProductDetailsActivity" />
+        <activity
+            android:name=".presentation.ui.buyers.HomeActivity"
+            android:label="@string/title_activity_home"
+            android:theme="@style/Theme.Ecommerce.NoActionBar" />
+        <activity android:name=".presentation.ui.seller.SellerAddNewProductActivity" />
+        <activity android:name=".presentation.ui.RegisterActivity" />
+        <activity android:name=".presentation.ui.LoginActivity" />
+        <activity android:name=".presentation.ui.MainActivity" />
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" />

@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class OrderServices {
@@ -42,7 +43,7 @@ public class OrderServices {
         ordersReference.child(ORDER_REF_NAME)
                 .child(firebaseUser.getUid())
                 .child(order.getOrderId())
-                .setValue(order)
+                .setValue(order, -1 * new Date().getTime())
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull @NotNull Task<Void> task) {
@@ -54,7 +55,8 @@ public class OrderServices {
 
     public void getUserOrders() {
         //TODO maintain orderby insted if statement
-        ordersReference.child(ORDER_REF_NAME)
+        ordersReference
+                .child(ORDER_REF_NAME)
                 .child(firebaseUser.getUid())
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -69,6 +71,52 @@ public class OrderServices {
                         }
 
                         userShippedOrderLiveData.setValue(orderShippedList);
+                        userUnShippedOrderLiveData.setValue(orderUnShippedList);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                    }
+                });
+    }
+
+    public void getUserShippedOrders() {
+        ordersReference
+                .child(ORDER_REF_NAME)
+                .child(firebaseUser.getUid())
+                .orderByChild("state")
+                .equalTo("shipped")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        List<Order> orderShippedList = new ArrayList<>();
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            orderShippedList.add(dataSnapshot.getValue(Order.class));
+                        }
+                        userShippedOrderLiveData.setValue(orderShippedList);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                    }
+                });
+    }
+
+    public void getUserUnShippedOrders() {
+        ordersReference
+                .child(ORDER_REF_NAME)
+                .child(firebaseUser.getUid())
+                .orderByChild("state")
+                .equalTo("not shipped")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        List<Order> orderUnShippedList = new ArrayList<>();
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            orderUnShippedList.add(dataSnapshot.getValue(Order.class));
+                        }
                         userUnShippedOrderLiveData.setValue(orderUnShippedList);
                     }
 

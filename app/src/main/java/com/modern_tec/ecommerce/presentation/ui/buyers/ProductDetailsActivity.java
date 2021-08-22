@@ -28,9 +28,11 @@ public class ProductDetailsActivity extends AppCompatActivity {
     private String typeOfAction = "show details";
     private Product product;
     private CartProduct cartProduct;
-    private int quantity = 0;
+    private int quantity = 1;
     private double discount = 0;
     double total = 0;
+
+    private boolean isBuyNow;
 
     //TODO add more details about product like seller name...
     @Override
@@ -42,54 +44,76 @@ public class ProductDetailsActivity extends AppCompatActivity {
         product = (Product) getIntent().getSerializableExtra(HomeActivity.CLICKED_ITEM_EXTRA);
         if (product != null) {
             displayProductInfo();
-        } else {
-            cartProduct = (CartProduct) getIntent().getSerializableExtra(CartActivity.EDIT_CART_ITEM_EXTRA);
-
-            productViewModel.getProductById(cartProduct.getProductId());
-            productViewModel.getSingleProductLiveData().observe(this, new Observer<Product>() {
-                @Override
-                public void onChanged(Product p) {
-                    product = p;
-                    quantity = cartProduct.getProductQuantity();
-                    total = (product.getProductPrice() * quantity) - (product.getProductPrice() * discount);
-                    binding.productTotalPriceDetails.setText(total + " EG");
-                    typeOfAction = "edit product";
-                    displayProductInfo();
-                }
-            });
-
         }
-        binding.attProductToCart.setOnClickListener(new View.OnClickListener() {
+
+        binding.productDetailsBackArrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (quantity > 0)
-                    addProductToCart(product);
-                else
-                    Toast.makeText(ProductDetailsActivity.this, "Choose the quantity", Toast.LENGTH_SHORT).show();
+                onBackPressed();
+            }
+        });
+//        else {
+//            cartProduct = (CartProduct) getIntent().getSerializableExtra(CartActivity.EDIT_CART_ITEM_EXTRA);
+//
+//            productViewModel.getProductById(cartProduct.getProductId());
+//            productViewModel.getSingleProductLiveData().observe(this, new Observer<Product>() {
+//                @Override
+//                public void onChanged(Product p) {
+//                    product = p;
+//                    quantity = cartProduct.getProductQuantity();
+//                    total = (product.getProductPrice() * quantity) - (product.getProductPrice() * discount);
+////                    binding.productTotalPriceDetails.setText(total + " EG");
+//                    typeOfAction = "edit product";
+//                    displayProductInfo();
+//                }
+//            });
+//
+//        }
+        binding.addProductToCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isBuyNow = false;
+                addProductToCart(product);
+            }
+        });
+
+        binding.buyNowBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isBuyNow = true;
+                addProductToCart(product);
             }
         });
 
         cartViewModel.getIsProductAddedToCart().observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean aBoolean) {
-                if (typeOfAction.equals("edit product")) {
+//                if (typeOfAction.equals("edit product")) {
+//                    startActivity(new Intent(ProductDetailsActivity.this, CartActivity.class));
+//                    finish();
+//                } else {
+
+                if (isBuyNow) {
                     startActivity(new Intent(ProductDetailsActivity.this, CartActivity.class));
                     finish();
                 } else {
-                    startActivity(new Intent(ProductDetailsActivity.this, HomeActivity.class));
-                    finish();
+                    onBackPressed();
                 }
+//
+//
+//
+//                }
             }
         });
 
-        binding.productNumberIncreaseBtn.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
-            @Override
-            public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
-                quantity = newValue;
-                total = (product.getProductPrice() * quantity) - (product.getProductPrice() * discount);
-                binding.productTotalPriceDetails.setText(total + " EG");
-            }
-        });
+//        binding.productNumberIncreaseBtn.setOnValueChangeListener(new ElegantNumberButton.OnValueChangeListener() {
+//            @Override
+//            public void onValueChange(ElegantNumberButton view, int oldValue, int newValue) {
+//                quantity = newValue;
+//                total = (product.getProductPrice() * quantity) - (product.getProductPrice() * discount);
+//                binding.productTotalPriceDetails.setText(total + " EG");
+//            }
+//        });
 
 
     }
@@ -104,7 +128,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
             binding.productNameDetails.setText(product.getProductName());
             binding.productDescDetails.setText(product.getProductDescription());
             binding.productPriceDetails.setText(product.getProductPrice() + " EG");
-            binding.productNumberIncreaseBtn.setNumber(quantity + "");
+            binding.productSellerDetails.setText(product.getSellerName());
+//            binding.productNumberIncreaseBtn.setNumber(quantity + "");
         }
     }
 
@@ -113,7 +138,8 @@ public class ProductDetailsActivity extends AppCompatActivity {
         DateInfo dateInfo = new DateInfo();
 
         CartProduct cartProduct = new CartProduct(product.getProductId(), product.getProductName()
-                , product.getProductPrice(), dateInfo.getDate(), dateInfo.getTime(),
+                , product.getProductImageUrl(), product.getSellerName(), product.getProductPrice()
+                , dateInfo.getDate(), dateInfo.getTime(),
                 quantity, discount, total);
 
         cartViewModel.addProductToCart(cartProduct);

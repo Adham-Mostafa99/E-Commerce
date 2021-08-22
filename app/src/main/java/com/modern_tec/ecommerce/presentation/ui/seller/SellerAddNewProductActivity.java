@@ -99,7 +99,7 @@ public class SellerAddNewProductActivity extends AppCompatActivity {
                             , null
                             , categoryName
                             , seller.getName()
-                            , seller.getAddress()
+                            , seller.getAddress().get(0).getAddressName()
                             , seller.getPhone()
                             , seller.getEmail()
                             , userViewModel.getUserId()

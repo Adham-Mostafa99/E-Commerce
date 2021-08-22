@@ -7,6 +7,8 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.firebase.auth.FirebaseUser;
+import com.modern_tec.ecommerce.core.models.Address;
 import com.modern_tec.ecommerce.core.models.Seller;
 import com.modern_tec.ecommerce.core.models.User;
 import com.modern_tec.ecommerce.data.repository.UserRepo;
@@ -62,6 +64,10 @@ public class UserViewModel extends AndroidViewModel {
         userRepo.createSellerAccount(seller);
     }
 
+    public FirebaseUser getCurrentUser() {
+        return userRepo.getCurrentUser();
+    }
+
     public void updateUserProfile(User user, boolean isPhoto) {
         userRepo.updateUserProfile(user, isPhoto);
     }
@@ -107,6 +113,14 @@ public class UserViewModel extends AndroidViewModel {
 
     public LiveData<Boolean> getIsPasswordUpdated() {
         return userRepo.getIsPasswordUpdated();
+    }
+
+    public LiveData<Boolean> updateUserAddress(Address address) {
+        return userRepo.updateUserAddress(address);
+    }
+
+    public LiveData<Boolean> updateOriginalAddress(Address address) {
+        return userRepo.updateOriginalAddress(address);
     }
 
     public LiveData<Seller> getSellerLiveData() {

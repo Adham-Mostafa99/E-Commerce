@@ -2,9 +2,11 @@ package com.modern_tec.ecommerce.presentation.ui.buyers;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.modern_tec.ecommerce.R;
+import com.modern_tec.ecommerce.core.date.DateInfo;
 import com.modern_tec.ecommerce.core.models.CartProduct;
 import com.modern_tec.ecommerce.core.models.Order;
 import com.modern_tec.ecommerce.presentation.adapters.OrderAdapter;
@@ -40,13 +43,23 @@ public class UnShippedOrders extends Fragment {
         initView(view);
         initViewModels();
         initAdapter();
-        orderViewModel.getUserOrders();
+
+        view.findViewById(R.id.order_back_arrow).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+
+        orderViewModel.getUserUnShippedOrders();
 
 
         orderViewModel.getUserUnShippedOrderLiveData().observe(getViewLifecycleOwner(), new Observer<List<Order>>() {
             @Override
             public void onChanged(List<Order> orders) {
-                adapter.submitList(orders);
+                    adapter.submitList(orders);
+                    recyclerView.getLayoutManager().scrollToPosition(0);
+
             }
         });
         return view;
@@ -58,23 +71,37 @@ public class UnShippedOrders extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setHasFixedSize(true);
         setOnItemClick();
+        setOnOrderClick();
     }
+
 
     private void initViewModels() {
         orderViewModel = ViewModelProviders.of(this).get(OrderViewModel.class);
+    }
+
+    private void setOnOrderClick() {
+        adapter.setOnOrderClickListener(new OrderAdapter.OnOrderClickListener() {
+            @Override
+            public void onOrderClick(Order order) {
+                startActivity(new Intent(getActivity(), UserOrderProductsActivity.class)
+                        .putParcelableArrayListExtra(PRODUCT_LIST, (ArrayList<CartProduct>) order.getCartProductList()));
+
+            }
+        });
     }
 
     private void setOnItemClick() {
         adapter.setOnItemClickListener(new OrderAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Order order) {
-                adapter.setOnItemClickListener(new OrderAdapter.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(Order order) {
-                        startActivity(new Intent(getActivity(), UserOrderProductsActivity.class)
-                                .putParcelableArrayListExtra(PRODUCT_LIST, (ArrayList<CartProduct>) order.getCartProductList()));
-                    }
-                });
+                DateInfo dateInfo = new DateInfo();
+                String id = dateInfo.getDate() + dateInfo.getTime();
+
+                order.setOrderId(id);
+                order.setOrderDate(dateInfo.getDate());
+                order.setOrderTime(dateInfo.getTime());
+                orderViewModel.createOrder(order);
+
             }
         });
     }

@@ -4,17 +4,21 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.modern_tec.ecommerce.core.models.CartProduct;
 import com.modern_tec.ecommerce.databinding.ActivityUserProductsBinding;
 import com.modern_tec.ecommerce.presentation.adapters.CartAdapter;
+import com.modern_tec.ecommerce.presentation.adapters.OrderProductsAdapter;
 
 import java.util.List;
+
+import static com.modern_tec.ecommerce.presentation.ui.buyers.UnShippedOrders.PRODUCT_LIST;
 
 public class UserOrderProductsActivity extends AppCompatActivity {
     ActivityUserProductsBinding binding;
 
-    private CartAdapter cartAdapter;
+    private OrderProductsAdapter orderProductsAdapter;
 
     private List<CartProduct> cartProductList;
 
@@ -24,20 +28,27 @@ public class UserOrderProductsActivity extends AppCompatActivity {
         initBinding();
         initAdapter();
 
-        cartProductList = getIntent().getParcelableArrayListExtra(ShippedOrders.PRODUCT_LIST);
+        binding.userProductBackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+        cartProductList = getIntent().getParcelableArrayListExtra(PRODUCT_LIST);
 
         if (cartProductList.size() > 0) {
-            cartAdapter.submitList(cartProductList);
+            orderProductsAdapter.submitList(cartProductList);
         }
 
 
     }
 
     private void initAdapter() {
-        cartAdapter = new CartAdapter();
+        orderProductsAdapter = new OrderProductsAdapter();
         binding.userOrderProductsRecycler.setHasFixedSize(true);
         binding.userOrderProductsRecycler.setLayoutManager(new LinearLayoutManager(this));
-        binding.userOrderProductsRecycler.setAdapter(cartAdapter);
+        binding.userOrderProductsRecycler.setAdapter(orderProductsAdapter);
     }
 
     private void initBinding() {

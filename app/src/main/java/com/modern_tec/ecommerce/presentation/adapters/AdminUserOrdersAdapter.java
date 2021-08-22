@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.modern_tec.ecommerce.R;
 import com.modern_tec.ecommerce.core.models.SellerUserOrders;
+import com.modern_tec.ecommerce.databinding.FragmentSellerAllUsersOrdersBinding;
+import com.modern_tec.ecommerce.databinding.UserOrdersItemBinding;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -39,16 +41,25 @@ public class AdminUserOrdersAdapter extends ListAdapter<SellerUserOrders, AdminU
     @NotNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.user_orders_item, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(UserOrdersItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull AdminUserOrdersAdapter.ViewHolder holder, int position) {
         SellerUserOrders sellerUserOrders = getItem(position);
-        holder.userName.setText("Name: " + sellerUserOrders.getOrderList().get(0).getUserName());
-        holder.ordersQuantity.setText("Orders Quantity: " + sellerUserOrders.getOrderList().size());
 
+        holder.binding.userName.setText(sellerUserOrders.getOrderList().get(0).getUserName());
+        holder.binding.userNumberOrders.setText(sellerUserOrders.getOrderList().size() + " Orders");
+
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null && position != RecyclerView.NO_POSITION) {
+                    onItemClickListener.onItemClick(sellerUserOrders);
+                }
+            }
+        });
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -56,25 +67,11 @@ public class AdminUserOrdersAdapter extends ListAdapter<SellerUserOrders, AdminU
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView userName;
-        TextView ordersQuantity;
-        Button showOrdersBtn;
+        UserOrdersItemBinding binding;
 
-        public ViewHolder(@NonNull @NotNull View itemView) {
-            super(itemView);
-
-            userName = itemView.findViewById(R.id.item_user_orders_user_name);
-            ordersQuantity = itemView.findViewById(R.id.item_user_orders_quantity);
-            showOrdersBtn = itemView.findViewById(R.id.item_user_orders_show);
-
-            showOrdersBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onItemClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
-                        onItemClickListener.onItemClick(getItem(getAdapterPosition()));
-                    }
-                }
-            });
+        public ViewHolder(@NonNull @NotNull UserOrdersItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
 
         }
     }

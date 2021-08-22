@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".presentation.ui.buyers.ProfileActivity">
+
+    <ImageView
+        android:id="@+id/profile_back_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="26dp"
+        android:src="@drawable/ic_baseline_keyboard_backspace" />
+
+
+    <TextView
+        android:id="@+id/profile_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_back_arrow"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/arsenal"
+        android:text="Profile"
+        android:textColor="@color/black"
+        android:textSize="30sp" />
+
+    <ImageView
+        android:id="@+id/edit_profile_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_back_arrow"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="24dp"
+        android:src="@drawable/ic_baseline_edit" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/image_profile"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_below="@id/profile_txt"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/profile"
+        app:civ_border_color="@color/borders"
+        app:civ_border_width="1dp" />
+
+
+    <ImageView
+        android:id="@+id/profile_change_photo"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_below="@id/image_profile"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_menu_camera" />
+
+
+    <EditText
+        android:id="@+id/profile_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_change_photo"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="18dp"
+        android:enabled="false"
+        android:hint="Name"
+        android:inputType="none"
+        android:textColor="@color/gray" />
+
+
+    <TextView
+        android:id="@+id/profile_address_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_name"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="16dp"
+        android:text="Address"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
+
+
+    <TextView
+        android:id="@+id/profile_add_address_txt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_address_txt"
+        android:layout_marginHorizontal="24dp"
+        android:text="Add address"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+
+    <TextView
+        android:id="@+id/profile_address_details"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_address_txt"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="24dp"
+        android:maxEms="10"
+        android:text="Shewrapara, Mirpur, Dhaka-1216"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/profile_address_city"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_address_details"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:maxEms="10"
+        android:text="Cairo"
+        android:textSize="18sp" />
+
+
+    <TextView
+        android:id="@+id/profile_address_postal_code"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_address_city"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:maxEms="10"
+        android:text="44452"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/profile_address_phone"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/profile_address_postal_code"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="24dp"
+        android:maxEms="10"
+        android:text="011145255"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/settings_change_pass_btn"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="24dp"
+        android:background="@drawable/buttons"
+        android:text="Change Password"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
+</RelativeLayout>

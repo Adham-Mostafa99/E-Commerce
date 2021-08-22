@@ -1,129 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:custom="http://schemas.android.com/tools"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login"
-    tools:context=".presentation.ui.buyers.LoginActivity">
+    android:background="@color/white"
+    tools:context=".presentation.ui.LoginActivity">
 
 
     <ImageView
-        android:id="@+id/login_app_logo"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="200dp"
-        android:src="@drawable/applogo" />
-
-    <EditText
-        android:id="@+id/email_login_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/login_app_logo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="15dp"
-        android:background="@drawable/input_design"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        android:padding="20dp"
-        android:textColor="@color/colorPrimary"
-        android:textColorHint="@color/colorPrimary"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/pass_login_input"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/email_login_input"
-        android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="6dp"
-        android:background="@drawable/input_design"
-        android:hint="Password"
-        android:inputType="textPassword"
-        android:padding="20dp"
-        android:textColor="@color/colorPrimary"
-        android:textColorHint="@color/colorPrimary"
-        android:textSize="18sp"
-        android:textStyle="bold" />
-
-    <RelativeLayout
-        android:id="@+id/linear_layout_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pass_login_input"
-        android:layout_marginHorizontal="17dp"
-        android:layout_marginTop="4dp">
-
-        <com.rey.material.widget.CheckBox
-            android:id="@+id/remember_me_chkbx"
-            style="@style/Material.Drawable.CheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
-            android:gravity="center_vertical"
-            android:text="Remember me"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:cbd_strokeColor="@color/colorPrimary" />
-
-        <TextView
-            android:id="@+id/forget_pass_link"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="6dp"
-            android:text="Forget Password?"
-            android:textColor="@color/colorPrimary"
-            android:textSize="16sp"
-            android:textStyle="bold" />
-
-    </RelativeLayout>
-
-    <Button
-        android:id="@+id/login_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/linear_layout_1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="4dp"
-        android:background="@drawable/buttons"
-        android:padding="17dp"
-        android:text="Login"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/seller_panel_link"
+        android:id="@+id/login_back_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/login_btn"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
-        android:layout_marginEnd="24dp"
-        android:text="Want to be a seller?"
-        android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/admin_panel_link"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/login_btn"
-        android:layout_alignParentStart="true"
-        android:layout_centerVertical="true"
         android:layout_marginStart="24dp"
-        android:text="Admin login"
-        android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="26dp"
+        android:src="@drawable/ic_baseline_keyboard_backspace" />
+
+    <TextView
+        android:id="@+id/login_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login_back_arrow"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/arsenal"
+        android:text="Login"
+        android:textColor="@color/black"
+        android:textSize="30sp" />
+
+
+    <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
+        android:id="@+id/login_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login_back_arrow"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        app:toggle_selectedBackgroundColor="#667EEA"
+        app:toggle_backgroundColor="@color/white"
+        app:justifyContent="center">
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/buyer_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            app:toggle_text="Buyer" />
+
+        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+            android:id="@+id/seller_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="38dp"
+            app:toggle_text="Seller" />
+
+    </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
+
+
+    <FrameLayout
+        android:id="@+id/login_frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/login_txt"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+
+    <!--    <RelativeLayout-->
+    <!--        android:id="@+id/linear_layout_1"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@id/pass_login_input"-->
+    <!--        android:layout_marginHorizontal="17dp"-->
+    <!--        android:layout_marginTop="4dp">-->
+
+    <!--        <com.rey.material.widget.CheckBox-->
+    <!--            android:id="@+id/remember_me_chkbx"-->
+    <!--            style="@style/Material.Drawable.CheckBox"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_alignParentStart="true"-->
+    <!--            android:layout_centerVertical="true"-->
+    <!--            android:gravity="center_vertical"-->
+    <!--            android:text="Remember me"-->
+    <!--            android:textColor="@color/colorPrimary"-->
+    <!--            android:textSize="16sp"-->
+    <!--            android:textStyle="bold"-->
+    <!--            app:cbd_strokeColor="@color/colorPrimary" />-->
+
+    <!--        <TextView-->
+    <!--            android:id="@+id/forget_pass_link"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_alignParentEnd="true"-->
+    <!--            android:layout_centerVertical="true"-->
+    <!--            android:layout_marginStart="6dp"-->
+    <!--            android:text="Forget Password?"-->
+    <!--            android:textColor="@color/colorPrimary"-->
+    <!--            android:textSize="16sp"-->
+    <!--            android:textStyle="bold" />-->
+
+    <!--    </RelativeLayout>-->
+
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/seller_panel_link"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@id/login_btn"-->
+    <!--        android:layout_alignParentEnd="true"-->
+    <!--        android:layout_centerVertical="true"-->
+    <!--        android:layout_marginEnd="24dp"-->
+    <!--        android:text="Want to be a seller?"-->
+    <!--        android:textColor="@color/colorPrimary"-->
+    <!--        android:textSize="20sp"-->
+    <!--        android:textStyle="bold" />-->
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/admin_panel_link"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_below="@id/login_btn"-->
+    <!--        android:layout_alignParentStart="true"-->
+    <!--        android:layout_centerVertical="true"-->
+    <!--        android:layout_marginStart="24dp"-->
+    <!--        android:text="Admin login"-->
+    <!--        android:textColor="@color/colorPrimary"-->
+    <!--        android:textSize="20sp"-->
+    <!--        android:textStyle="bold" />-->
 
 </RelativeLayout>

@@ -5,6 +5,8 @@ import android.app.Application;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.google.firebase.auth.FirebaseUser;
+import com.modern_tec.ecommerce.core.models.Address;
 import com.modern_tec.ecommerce.core.models.Seller;
 import com.modern_tec.ecommerce.core.models.User;
 import com.modern_tec.ecommerce.data.database.Account;
@@ -38,6 +40,10 @@ public class UserRepo {
 
     public void loginAdmin(String email, String pass) {
         account.loginAdmin(email, pass);
+    }
+
+    public FirebaseUser getCurrentUser() {
+        return account.getCurrentUser();
     }
 
     public void createSellerAccount(Seller seller) {
@@ -90,6 +96,14 @@ public class UserRepo {
 
     public LiveData<User> getUserLiveData() {
         return account.getUserMutableLiveData();
+    }
+
+    public LiveData<Boolean> updateUserAddress(Address address) {
+        return account.updateUserAddress(address);
+    }
+
+    public LiveData<Boolean> updateOriginalAddress(Address address) {
+        return account.updateOriginalAddress(address);
     }
 
     public LiveData<Seller> getSellerLiveData() {

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/item_address_details"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:maxEms="10"
+        android:text="Shewrapara, Mirpur, Dhaka-1216"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/item_address_city"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_address_details"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:maxEms="10"
+        android:text="Cairo"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+
+    <TextView
+        android:id="@+id/item_address_postal_code"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_address_city"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:maxEms="10"
+        android:text="44452"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/item_address_phone"
+        android:layout_width="260dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/item_address_postal_code"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="24dp"
+        android:maxEms="10"
+        android:text="011145255"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <RadioButton
+        android:id="@+id/item_address_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="24dp" />
+
+</RelativeLayout>

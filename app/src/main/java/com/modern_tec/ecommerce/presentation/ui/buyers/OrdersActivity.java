@@ -1,11 +1,17 @@
 package com.modern_tec.ecommerce.presentation.ui.buyers;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 
 import com.modern_tec.ecommerce.databinding.ActivityOrdersBinding;
 import com.modern_tec.ecommerce.presentation.adapters.OrderFragmentAdapter;
+
+import org.jetbrains.annotations.NotNull;
 
 public class OrdersActivity extends AppCompatActivity {
     private ActivityOrdersBinding binding;
@@ -26,6 +32,7 @@ public class OrdersActivity extends AppCompatActivity {
 
         binding.container.setAdapter(adapter);
         binding.tabLayout.setupWithViewPager(binding.container);
+
     }
 
     private void initBinding() {

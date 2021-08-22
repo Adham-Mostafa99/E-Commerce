@@ -57,6 +57,10 @@ public class ProductViewModel extends AndroidViewModel {
         return productRepo.getProductLiveData();
     }
 
+    public LiveData<List<Product>> getProductsByCategory(String name) {
+        return productRepo.getProductsByCategory(name);
+    }
+
     public LiveData<Product> getSingleProductLiveData() {
         return productRepo.getSingleProductLiveData();
     }

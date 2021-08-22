@@ -31,6 +31,13 @@ public class SellerMaintainProductActivity extends AppCompatActivity {
         initBinding();
         initViewModels();
 
+        binding.maintainProductBackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
         product = (Product) getIntent().getSerializableExtra(AdminProductActivity.PRODUCT_EXTRA);
 
         if (product.getProductId() != null) {

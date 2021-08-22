@@ -1,20 +1,33 @@
 package com.modern_tec.ecommerce.core.models;
 
+import java.util.List;
+
 public class User {
     protected String email;
     protected String name;
     protected String photoUrl;
-    protected String address;
+    protected List<Address> address;
 
 
     public User() {
     }
 
-
-    public User(String email, String name, String photoUrl, String address) {
+    public User(String email, String name, String photoUrl, List<Address> address) {
         this.email = email;
         this.name = name;
         this.photoUrl = photoUrl;
+        this.address = address;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<Address> getAddress() {
+        return address;
+    }
+
+    public void setAddress(List<Address> address) {
         this.address = address;
     }
 
@@ -26,17 +39,11 @@ public class User {
         this.photoUrl = photoUrl;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public String getPhotoUrl() {
         return photoUrl;
     }
 
-    public String getAddress() {
-        return address;
-    }
 
     public String getName() {
         return name;
@@ -47,13 +54,5 @@ public class User {
     }
 
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "email='" + email + '\'' +
-                ", name='" + name + '\'' +
-                ", photoUrl='" + photoUrl + '\'' +
-                ", address='" + address + '\'' +
-                '}';
-    }
+
 }

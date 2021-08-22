@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
@@ -63,7 +64,7 @@ public class SellerHomeFragment extends Fragment {
 
     private void initAdapter() {
         adapter = new SellerProductAdapter(getContext());
-        binding.sellerProductRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.sellerProductRecycler.setLayoutManager(new GridLayoutManager(getContext(),2));
         binding.sellerProductRecycler.setHasFixedSize(true);
         binding.sellerProductRecycler.setAdapter(adapter);
         setOnClickItem();

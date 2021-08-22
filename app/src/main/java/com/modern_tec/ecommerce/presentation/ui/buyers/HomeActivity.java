@@ -14,8 +14,10 @@ import com.modern_tec.ecommerce.R;
 import com.modern_tec.ecommerce.core.models.Product;
 import com.modern_tec.ecommerce.core.models.User;
 import com.modern_tec.ecommerce.databinding.ActivityHomeBinding;
+import com.modern_tec.ecommerce.presentation.adapters.CategoryAdapter;
 import com.modern_tec.ecommerce.presentation.adapters.ProductAdapter;
 import com.modern_tec.ecommerce.presentation.ui.MainActivity;
+import com.modern_tec.ecommerce.presentation.viewmodels.CategoryViewModel;
 import com.modern_tec.ecommerce.presentation.viewmodels.ProductViewModel;
 import com.modern_tec.ecommerce.presentation.viewmodels.UserViewModel;
 import com.google.android.material.navigation.NavigationView;
@@ -41,18 +43,17 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     public static final String CLICKED_ITEM_EXTRA = "clicked";
+    public static final String CLICKED_CATEGORY_EXTRA = "category clicked";
 
     private ActivityHomeBinding binding;
 
     private UserViewModel userViewModel;
     private ProductViewModel productViewModel;
+    private CategoryViewModel categoryViewModel;
 
-    private DrawerLayout drawer;
-    private Toolbar toolbar;
-    private NavigationView navigationView;
     private View headerView;
     private ProductAdapter productAdapter;
-    private RecyclerView recyclerView;
+    private CategoryAdapter categoryAdapter;
 
     private TextView userName;
     private CircleImageView userPhoto;
@@ -62,25 +63,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initBinding();
-        initViews();
+        initViewModels();
         initAdapter();
+        initToolbar();
+        initNavigationDrawable();
 
+        //TODO add on click category
 
-        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
-        productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
-
-        setSupportActionBar(toolbar);
-        toolbar.setTitle("Home");
-
-
-        initActionBarDrawerToggle();
-        navigationView.setNavigationItemSelectedListener(this);
-
-
-        headerView = navigationView.getHeaderView(0);
-        userName = headerView.findViewById(R.id.user_profile_name);
-        userPhoto = headerView.findViewById(R.id.user_profile_image);
         userViewModel.getUserInfo();
+        productViewModel.getProducts();
+
 
         userViewModel.getUserLiveData().observe(this, new Observer<User>() {
             @Override
@@ -94,9 +86,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 }
             }
         });
-
-        productViewModel.getProducts();
-
         productViewModel.getProductLiveData().
 
                 observe(this, new Observer<List<Product>>() {
@@ -106,15 +95,77 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
 
-        binding.appBarHome.fab.setOnClickListener(new View.OnClickListener() {
+
+        binding.appBarHome.contentHome.featuredSeeAllBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                startActivity(new Intent(HomeActivity.this, CartActivity.class));
+            public void onClick(View v) {
+                startActivity(new Intent(HomeActivity.this, FeaturesActivity.class));
             }
         });
 
-        onClickProductItem();
+    }
 
+    private void initBinding() {
+        binding = ActivityHomeBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+    }
+
+    private void initAdapter() {
+        productAdapter = new ProductAdapter(this);
+        binding.appBarHome.contentHome.recyclerMenu.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        binding.appBarHome.contentHome.recyclerMenu.setAdapter(productAdapter);
+        binding.appBarHome.contentHome.recyclerMenu.setHasFixedSize(true);
+
+        categoryAdapter = new CategoryAdapter();
+        binding.appBarHome.contentHome.recyclerCategory.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        binding.appBarHome.contentHome.recyclerCategory.setAdapter(categoryAdapter);
+        categoryAdapter.submitList(categoryViewModel.getCategories());
+
+
+        onClickProductItem();
+        onClickCategory();
+    }
+
+    private void onClickCategory() {
+        categoryAdapter.setOnCLickItem(new CategoryAdapter.OnCLickItem() {
+            @Override
+            public void onclick(String name) {
+                startActivity(new Intent(HomeActivity.this, FeaturesActivity.class)
+                        .putExtra(CLICKED_CATEGORY_EXTRA, name));
+            }
+        });
+    }
+
+    private void initViewModels() {
+        userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
+        productViewModel = ViewModelProviders.of(this).get(ProductViewModel.class);
+        categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel.class);
+    }
+
+
+    private void initNavigationDrawable() {
+        initActionBarDrawerToggle();
+        binding.navView.setNavigationItemSelectedListener(this);
+
+
+        headerView = binding.navView.getHeaderView(0);
+        userName = headerView.findViewById(R.id.user_profile_name);
+        userPhoto = headerView.findViewById(R.id.user_profile_image);
+    }
+
+    private void initToolbar() {
+        setSupportActionBar(binding.appBarHome.toolbar);
+        getSupportActionBar().setTitle(null);
+    }
+
+
+    private void initActionBarDrawerToggle() {
+        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
+                this, binding.drawerLayout, binding.appBarHome.toolbar,
+                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        binding.drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        actionBarDrawerToggle.syncState();
     }
 
     private void onClickProductItem() {
@@ -135,80 +186,34 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         userViewModel.getUserInfo();
     }
 
-    private void initBinding() {
-        binding = ActivityHomeBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-    }
-
-    private void initViews() {
-        drawer = binding.drawerLayout;
-        toolbar = binding.appBarHome.toolbar;
-        navigationView = binding.navView;
-        recyclerView = findViewById(R.id.recycler_menu);
-
-    }
-
-    private void initAdapter() {
-        productAdapter = new ProductAdapter(this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(productAdapter);
-        recyclerView.setHasFixedSize(true);
-    }
-
-    private void initActionBarDrawerToggle() {
-        ActionBarDrawerToggle actionBarDrawerToggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar,
-                R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-
-        drawer.addDrawerListener(actionBarDrawerToggle);
-        actionBarDrawerToggle.syncState();
-    }
-
     @Override
     public void onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START))
-            drawer.closeDrawer(GravityCompat.START);
+        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
+            binding.drawerLayout.closeDrawer(GravityCompat.START);
         else
 //            super.onBackPressed();
             Toast.makeText(this, "Exit!", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
-
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-                return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
 
         switch (item.getItemId()) {
+            case R.id.nav_profile:
+                startActivity(new Intent(this, ProfileActivity.class));
+                break;
             case R.id.nav_cart:
                 startActivity(new Intent(this, CartActivity.class));
                 break;
             case R.id.nav_orders:
-                startActivity(new Intent(this,OrdersActivity.class));
+                startActivity(new Intent(this, OrdersActivity.class));
                 break;
             case R.id.nav_search:
                 startActivity(new Intent(this, SearchProductActivity.class));
                 break;
-            case R.id.nav_categories:
-                //TODO add catigory
-                break;
             case R.id.nav_tools:
-                startActivity(new Intent(this, SettingsActivity.class));
+                //TODO will add later
                 break;
             case R.id.nav_logout:
                 startActivity(new Intent(HomeActivity.this, MainActivity.class)
@@ -216,7 +221,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 userViewModel.logOut();
                 break;
         }
-        drawer.closeDrawer(GravityCompat.START);
+        binding.drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
 

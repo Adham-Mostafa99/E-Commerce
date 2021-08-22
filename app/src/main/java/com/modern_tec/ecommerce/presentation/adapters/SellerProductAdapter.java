@@ -33,6 +33,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.modern_tec.ecommerce.R;
 import com.modern_tec.ecommerce.core.models.Product;
+import com.modern_tec.ecommerce.databinding.SellerProductItemBinding;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -67,8 +68,7 @@ public class SellerProductAdapter extends ListAdapter<Product, SellerProductAdap
     @NotNull
     @Override
     public SellerProductAdapter.ViewHolder onCreateViewHolder(@NonNull @NotNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.seller_product_item, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(SellerProductItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
@@ -79,43 +79,35 @@ public class SellerProductAdapter extends ListAdapter<Product, SellerProductAdap
     public void onBindViewHolder(@NonNull @NotNull SellerProductAdapter.ViewHolder holder, int position) {
         Product currentProduct = getItem(position);
 
-        holder.productName.setText(currentProduct.getProductName());
-        holder.productName.setText(currentProduct.getProductState());
-        holder.productPrice.setText(currentProduct.getProductPrice() + " EG");
-        holder.productDescription.setText(currentProduct.getProductDescription());
+        holder.binding.itemSellerProductName.setText(currentProduct.getProductName());
+        holder.binding.itemSellerProductPrice.setText(currentProduct.getProductPrice() + " EG");
+        holder.binding.itemSellerProductState.setText(currentProduct.getProductState());
 
         Glide
                 .with(context)
                 .load(currentProduct.getProductImageUrl())
                 .centerCrop()
                 .placeholder(R.drawable.place_holder)
-                .into(holder.productImage);
+                .into(holder.binding.itemSellerProductImage);
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onItemClickListener != null && position != RecyclerView.NO_POSITION) {
+                    onItemClickListener.onItemClick(currentProduct);
+                }
+            }
+        });
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView productName;
-        TextView productState;
-        ImageView productImage;
-        TextView productPrice;
-        TextView productDescription;
+        SellerProductItemBinding binding;
 
-        public ViewHolder(@NonNull @NotNull View itemView) {
-            super(itemView);
+        public ViewHolder(@NonNull @NotNull SellerProductItemBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
 
-            productName = itemView.findViewById(R.id.seller_item_product_name);
-            productState = itemView.findViewById(R.id.seller_item_product_state);
-            productImage = itemView.findViewById(R.id.seller_item_product_image);
-            productDescription = itemView.findViewById(R.id.seller_item_product_desc);
-            productPrice = itemView.findViewById(R.id.seller_item_product_price);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (onItemClickListener != null && getAdapterPosition() != RecyclerView.NO_POSITION) {
-                        onItemClickListener.onItemClick(getItem(getAdapterPosition()));
-                    }
-                }
-            });
         }
     }
 

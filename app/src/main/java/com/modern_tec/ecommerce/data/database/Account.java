@@ -9,9 +9,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.modern_tec.ecommerce.core.models.Address;
 import com.modern_tec.ecommerce.core.models.Seller;
 import com.modern_tec.ecommerce.core.models.User;
-import com.modern_tec.ecommerce.data.shared_pref.RememberUser;
+import com.modern_tec.ecommerce.data.shared_pref.UserType;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,7 +31,9 @@ import com.google.firebase.storage.UploadTask;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Account {
     private Context context;
@@ -77,6 +81,10 @@ public class Account {
 
     public String getUserId() {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
+
+    public FirebaseUser getCurrentUser() {
+        return FirebaseAuth.getInstance().getCurrentUser();
     }
 
     public void createAccount(String name, String email, String pass) {
@@ -235,8 +243,8 @@ public class Account {
 
     public void logOutAccount() {
         auth.signOut();
-        RememberUser rememberUser = new RememberUser(context);
-        rememberUser.deleteShared();
+        UserType userType = new UserType(context);
+        userType.deleteShared();
     }
 
 
@@ -418,6 +426,64 @@ public class Account {
                         }
                     }
                 });
+    }
+
+    public LiveData<Boolean> updateUserAddress(Address address) {
+        MutableLiveData<Boolean> updated = new MutableLiveData<>();
+
+
+        rootRef
+                .child(parentUserDbName)
+                .child(getUserId())
+                .child("address")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                    @Override
+                    public void onSuccess(DataSnapshot dataSnapshot) {
+                        List<Address> addressList = new ArrayList<>();
+                        if (dataSnapshot.exists()) {
+                            for (DataSnapshot current : dataSnapshot.getChildren()) {
+                                addressList.add(current.getValue(Address.class));
+                            }
+                        }
+                        addressList.add(address);
+
+                        rootRef
+                                .child(parentUserDbName)
+                                .child(getUserId())
+                                .child("address")
+                                .setValue(addressList)
+                                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                        if (task.isSuccessful())
+                                            updated.setValue(true);
+                                    }
+                                });
+                    }
+                });
+
+
+        return updated;
+    }
+
+    public LiveData<Boolean> updateOriginalAddress(Address address) {
+        MutableLiveData<Boolean> updated = new MutableLiveData<>();
+
+        rootRef
+                .child(parentUserDbName)
+                .child(getUserId())
+                .child("address")
+                .child("0")
+                .setValue(address)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        updated.setValue(true);
+                    }
+                });
+
+        return updated;
     }
 
     public MutableLiveData<Seller> getSellerMutableLiveData() {

@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    app:cardElevation="15dp">
+    android:layout_marginVertical="10dp"
+    android:layout_marginHorizontal="20dp"
+    app:cardElevation="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,41 +13,72 @@
         android:background="@color/white"
         android:padding="10dp">
 
+        <ImageView
+            android:id="@+id/cart_item_product_image"
+            android:layout_width="100dp"
+            android:layout_height="120dp"
+            android:layout_margin="18dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/product_placeholder" />
+
         <TextView
             android:id="@+id/cart_item_product_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="5dp"
-            android:text="Product Name"
-            android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:layout_marginTop="18dp"
+            android:layout_toEndOf="@id/cart_item_product_image"
+            android:text="Woman t- shirt"
+            android:textColor="@color/black"
+            android:textSize="16sp" />
+
 
         <TextView
-            android:id="@+id/cart_item_product_quantity"
+            android:id="@+id/cart_item_seller_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="5dp"
-            android:text="2"
-            android:textColor="@color/colorPrimary"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:layout_below="@id/cart_item_product_name"
+            android:layout_toEndOf="@id/cart_item_product_image"
+            android:text="Lotto.LTD"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/cart_item_product_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/cart_item_product_name"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
+            android:layout_below="@id/cart_item_seller_name"
+            android:layout_marginTop="4dp"
+            android:layout_toEndOf="@id/cart_item_product_image"
             android:text="500.0 EG"
             android:textColor="@color/colorPrimary"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textSize="16sp" />
+
+
+        <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+            android:id="@+id/cart_item_product_quantity"
+            android:layout_width="110dp"
+            android:layout_height="42dp"
+            android:layout_below="@id/cart_item_product_price"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:layout_toEndOf="@id/cart_item_product_image"
+            android:elevation="4dp"
+            app:finalNumber="10"
+            app:textColor="@color/borders"
+            app:backGroundColor="#F6F6F6"
+            app:initialNumber="1"
+            app:textSize="8sp" />
+
+        <ImageView
+            android:id="@+id/cart_item_product_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/ic_baseline_delete" />
+
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

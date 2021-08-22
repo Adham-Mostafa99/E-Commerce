@@ -60,6 +60,14 @@ public class OrderViewModel extends AndroidViewModel {
         return orderRepo.getUserShippedOrderLiveData();
     }
 
+    public void getUserUnShippedOrders(){
+        orderRepo.getUserUnShippedOrders();
+    }
+
+    public void getUserShippedOrders(){
+        orderRepo.getUserShippedOrders();
+    }
+
     public LiveData<List<Order>> getUserUnShippedOrderLiveData() {
         return orderRepo.getUserUnShippedOrderLiveData();
     }

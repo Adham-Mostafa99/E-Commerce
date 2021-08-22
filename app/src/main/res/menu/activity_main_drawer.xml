@@ -5,6 +5,12 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_baseline_person"
+            android:iconTint="@color/white"
+            android:title="Profile"/>
+
+        <item
             android:id="@+id/nav_cart"
             android:icon="@drawable/nav_cart"
             android:iconTint="@color/white"
@@ -20,11 +26,6 @@
             android:icon="@drawable/ic_baseline_search"
             android:iconTint="@color/white"
             android:title="Search" />
-        <item
-            android:id="@+id/nav_categories"
-            android:icon="@drawable/category"
-            android:iconTint="@color/white"
-            android:title="Categories" />
 
         <item
             android:id="@+id/nav_tools"

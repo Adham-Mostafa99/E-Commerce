@@ -6,31 +6,32 @@
     tools:context=".presentation.ui.seller.SellerUserProductsActivity">
 
 
-    <LinearLayout
-        android:id="@+id/admin_user_products_linear_1"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/user_product_back_arrow"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="12dp">
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="26dp"
+        android:src="@drawable/ic_baseline_keyboard_backspace" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Order Products"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/user_product_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_product_back_arrow"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/arsenal"
+        android:text="Products"
+        android:textColor="@color/black"
+        android:textSize="30sp" />
+
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/admin_user_products_recycler"
+        android:id="@+id/user_order_products_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/admin_user_products_linear_1"
+        android:layout_below="@id/user_product_txt"
         android:layout_centerHorizontal="true"
-        tools:listitem="@layout/cart_item" />
+        tools:listitem="@layout/order_products_item" />
 </RelativeLayout>

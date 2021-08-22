@@ -35,6 +35,13 @@ public class OrderRepo {
         orderServices.getAdminUserOrdersById(userId);
     }
 
+    public void getUserUnShippedOrders(){
+        orderServices.getUserUnShippedOrders();
+    }
+
+    public void getUserShippedOrders(){
+        orderServices.getUserShippedOrders();
+    }
     public void getAdminUserOrders() {
         orderServices.getAdminUserOrders();
     }

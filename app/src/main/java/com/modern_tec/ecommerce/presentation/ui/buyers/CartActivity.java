@@ -28,8 +28,6 @@ public class CartActivity extends AppCompatActivity {
     private ActivityCartBinding binding;
     private CartViewModel cartViewModel;
     private CartAdapter cartAdapter;
-    private AlertDialog.Builder builder;
-    private double totalPrice = 0;
     private ArrayList<CartProduct> userProducts;
 
 
@@ -39,7 +37,6 @@ public class CartActivity extends AppCompatActivity {
         initBinding();
         initViewModels();
         initAdapter();
-        initViews();
 
         cartViewModel.getUserProducts();
         cartViewModel.getCartUserProducts().observe(this, new Observer<ArrayList<CartProduct>>() {
@@ -47,13 +44,11 @@ public class CartActivity extends AppCompatActivity {
             public void onChanged(ArrayList<CartProduct> cartProducts) {
                 if (cartProducts.size() > 0) {
                     binding.emptyCart.setVisibility(View.GONE);
+                } else {
+                    binding.emptyCart.setVisibility(View.VISIBLE);
                 }
                 userProducts = cartProducts;
                 cartAdapter.submitList(cartProducts);
-                for (CartProduct cartProduct : cartProducts) {
-                    totalPrice = totalPrice + cartProduct.getProductTotalPrice();
-                }
-                binding.cartTotalPrice.setText(totalPrice + " EG");
             }
         });
 
@@ -68,19 +63,26 @@ public class CartActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (userProducts.size() > 0) {
-                    startActivity(new Intent(CartActivity.this, ConfirmFinalOrderActivity.class)
-                            .putExtra(TOTAL_PRICE_EXTRA, totalPrice)
-                            .putParcelableArrayListExtra(CART_LIST_PRICE_EXTRA, userProducts));
+                    startActivity(new Intent(CartActivity.this, BuyerAddressActivity.class));
+//                    startActivity(new Intent(CartActivity.this, ConfirmFinalOrderActivity.class)
+//                            .putExtra(TOTAL_PRICE_EXTRA, totalPrice)
+//                            .putParcelableArrayListExtra(CART_LIST_PRICE_EXTRA, userProducts));
                 } else {
                     Toast.makeText(CartActivity.this, "Cart is empty.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
+
+        binding.cartBackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+
+
     }
 
-    private void initViews() {
-        builder = new AlertDialog.Builder(this);
-    }
 
     private void initBinding() {
         binding = ActivityCartBinding.inflate(getLayoutInflater());
@@ -92,44 +94,31 @@ public class CartActivity extends AppCompatActivity {
     }
 
     private void initAdapter() {
-        cartAdapter = new CartAdapter();
+        cartAdapter = new CartAdapter(this);
         binding.cartRecycler.setLayoutManager(new LinearLayoutManager(this));
         binding.cartRecycler.setHasFixedSize(true);
         binding.cartRecycler.setAdapter(cartAdapter);
-        onClickOnItem();
+        onChangeQuantity();
+        onDeleteProduct();
     }
 
-    private void onClickOnItem() {
-        cartAdapter.setOnItemClickListener(new CartAdapter.OnItemClickListener() {
+
+    private void onChangeQuantity() {
+        cartAdapter.setOnChangeQuantity(new CartAdapter.OnChangeQuantity() {
             @Override
-            public void onItemClick(CartProduct cartProduct) {
-                openAlertDialog("Cart Options", cartProduct);
+            public void onChange(CartProduct cartProduct, int quantity) {
+                cartProduct.setProductQuantity(quantity);
+                cartViewModel.addProductToCart(cartProduct);
             }
         });
     }
 
-    private void openAlertDialog(String title, CartProduct cartProduct) {
-        CharSequence options[] = new CharSequence[]{
-                "Edit",
-                "Remove"
-        };
-        builder.setTitle(title);
-        builder.setItems(options, new DialogInterface.OnClickListener() {
+    private void onDeleteProduct() {
+        cartAdapter.setOnDelete(new CartAdapter.OnDelete() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (which) {
-                    case 0://Edit
-                        startActivity(new Intent(CartActivity.this, ProductDetailsActivity.class)
-                                .putExtra(EDIT_CART_ITEM_EXTRA, (Serializable) cartProduct));
-                        break;
-                    case 1://Remove
-                        cartViewModel.deleteProductFromCart(cartProduct.getProductId());
-                        break;
-                    default:
-                        break;
-                }
+            public void onDelete(String id) {
+                cartViewModel.deleteProductFromCart(id);
             }
         });
-        builder.show();
     }
 }

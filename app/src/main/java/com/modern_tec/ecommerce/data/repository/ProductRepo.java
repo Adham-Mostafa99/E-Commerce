@@ -49,6 +49,10 @@ public class ProductRepo {
         return productService.getProductMutableLiveData();
     }
 
+    public LiveData<List<Product>> getProductsByCategory(String name) {
+        return productService.getProductsByCategory(name);
+    }
+
     public LiveData<Product> getSingleProductLiveData() {
         return productService.getSingleProductMutableLiveData();
     }
