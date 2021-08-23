@@ -22,14 +22,31 @@ import org.jetbrains.annotations.NotNull;
 
 public class SellerCategoryFragment extends Fragment {
 
+    private String menCategory = "men";
+    private String womenCategory = "women";
+    private String kidsCategory = "kids";
+
     private FragmentSellerCategoryBinding binding;
     public static final String CATEGORY_EXTRA = "category_extra";
-
-    ImageView tShirts, sports, femaleAresses, sweather;
-    ImageView glasses, pursesBags, hats, shoess;
-    ImageView headphoness, laptops, watches, mobiles;
-
     UserViewModel userViewModel;
+
+
+    View.OnClickListener onClickListener = v -> {
+        switch (v.getId()) {
+            case R.id.category_men:
+                intentToNewProductActivity(menCategory);
+                break;
+            case R.id.category_women:
+                intentToNewProductActivity(womenCategory);
+                break;
+            case R.id.category_kids:
+                intentToNewProductActivity(kidsCategory);
+                break;
+            default:
+                break;
+
+        }
+    };
 
 
     @Nullable
@@ -38,93 +55,23 @@ public class SellerCategoryFragment extends Fragment {
     public View onCreateView(@NonNull @NotNull LayoutInflater inflater, @Nullable @org.jetbrains.annotations.Nullable ViewGroup container, @Nullable @org.jetbrains.annotations.Nullable Bundle savedInstanceState) {
 
         binding = FragmentSellerCategoryBinding.inflate(inflater, container, false);
-        View view = binding.getRoot();
 
-
-
-        initViews();
         initViewModels();
 
-        View.OnClickListener onClickListener = v -> {
-            switch (v.getId()) {
-                case R.id.t_shirts:
-                    intentToNewProductActivity("t_shirts");
-                    break;
-                case R.id.sports_t_shirts:
-                    intentToNewProductActivity("sports_t_shirts");
-                    break;
-                case R.id.female_dresses:
-                    intentToNewProductActivity("female_dresses");
-                    break;
-                case R.id.sweather:
-                    intentToNewProductActivity("sweather");
-                    break;
-                case R.id.glasses:
-                    intentToNewProductActivity("glasses");
-                    break;
-                case R.id.purses_bags:
-                    intentToNewProductActivity("purses_bags");
-                    break;
-                case R.id.hats:
-                    intentToNewProductActivity("hats");
-                    break;
-                case R.id.shoess:
-                    intentToNewProductActivity("shoess");
-                    break;
-                case R.id.headphoness:
-                    intentToNewProductActivity("headphoness");
-                    break;
-                case R.id.laptops:
-                    intentToNewProductActivity("laptops");
-                    break;
-                case R.id.watches:
-                    intentToNewProductActivity("watches");
-                    break;
-                case R.id.mobiles:
-                    intentToNewProductActivity("mobiles");
-                    break;
-                default:
-                    break;
-
-            }
-        };
         initViewsListener(onClickListener);
 
-        return view;
+        return binding.getRoot();
     }
 
     private void initViewModels() {
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
     }
 
-    private void initViews() {
-        tShirts = binding.tShirts;
-        sports = binding.sportsTShirts;
-        femaleAresses = binding.femaleDresses;
-        sweather = binding.sweather;
-        glasses = binding.glasses;
-        pursesBags = binding.pursesBags;
-        hats = binding.hats;
-        headphoness = binding.headphoness;
-        laptops = binding.laptops;
-        watches = binding.watches;
-        mobiles = binding.mobiles;
-        shoess = binding.shoess;
-    }
 
     private void initViewsListener(View.OnClickListener onClickListener) {
-        tShirts.setOnClickListener(onClickListener);
-        sports.setOnClickListener(onClickListener);
-        femaleAresses.setOnClickListener(onClickListener);
-        sweather.setOnClickListener(onClickListener);
-        glasses.setOnClickListener(onClickListener);
-        pursesBags.setOnClickListener(onClickListener);
-        hats.setOnClickListener(onClickListener);
-        headphoness.setOnClickListener(onClickListener);
-        laptops.setOnClickListener(onClickListener);
-        watches.setOnClickListener(onClickListener);
-        mobiles.setOnClickListener(onClickListener);
-        shoess.setOnClickListener(onClickListener);
+        binding.categoryWomen.setOnClickListener(onClickListener);
+        binding.categoryMen.setOnClickListener(onClickListener);
+        binding.categoryKids.setOnClickListener(onClickListener);
     }
 
     private void intentToNewProductActivity(String category) {

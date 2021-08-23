@@ -11,6 +11,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.modern_tec.ecommerce.R;
@@ -24,22 +26,25 @@ public class SellerMainActivity extends AppCompatActivity {
 
     private ActivitySellerMainBinding binding;
     private UserViewModel userViewModel;
+    private MutableLiveData<Fragment> currentFragment = new MutableLiveData<>();
 
     private final BottomNavigationView.OnNavigationItemSelectedListener onNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
         @Override
         public boolean onNavigationItemSelected(@NonNull @NotNull MenuItem item) {
-            Fragment currentFragment = null;
 
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    currentFragment = new SellerHomeFragment();
+                    if (!(currentFragment.getValue() instanceof SellerHomeFragment))
+                        currentFragment.postValue(new SellerHomeFragment());
                     break;
                 case R.id.navigation_orders:
-                    currentFragment = new SellerAllUsersOrdersFragment();
+                    if (!(currentFragment.getValue() instanceof SellerAllUsersOrdersFragment))
+                        currentFragment.postValue(new SellerAllUsersOrdersFragment());
                     break;
                 case R.id.navigation_add:
-                    currentFragment = new SellerCategoryFragment();
+                    if (!(currentFragment.getValue() instanceof SellerCategoryFragment))
+                        currentFragment.postValue(new SellerCategoryFragment());
                     break;
                 case R.id.navigation_logout:
                     userViewModel.logOut();
@@ -48,10 +53,6 @@ public class SellerMainActivity extends AppCompatActivity {
                     finish();
                     return true;
             }
-
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.seller_main_frame, currentFragment)
-                    .commit();
 
             return true;
         }
@@ -64,10 +65,16 @@ public class SellerMainActivity extends AppCompatActivity {
         initViewModels();
         binding.navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener);
 
+        currentFragment.setValue(new SellerHomeFragment());
 
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.seller_main_frame, new SellerHomeFragment())
-                .commit();
+        currentFragment.observe(this, new Observer<Fragment>() {
+            @Override
+            public void onChanged(Fragment fragment) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.seller_main_frame, currentFragment.getValue())
+                        .commit();
+            }
+        });
 
     }
 
