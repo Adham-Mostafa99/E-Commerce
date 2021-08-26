@@ -200,6 +200,8 @@ public class Account {
         return isLogin;
     }
 
+
+
     public void loginUser(String email, String pass) {
 
         isCheckedLogged.setValue(true);

@@ -13,7 +13,7 @@ public class Product implements Serializable {
     private String productTime;
     private String productCategory;
     private String sellerName;
-    private String sellerAddress;
+    private Address sellerAddress;
     private String sellerPhone;
     private String sellerEmail;
     private String sellerId;
@@ -22,7 +22,7 @@ public class Product implements Serializable {
     public Product() {
     }
 
-    public Product(String productId, String productImageUrl, String productName, String productDescription, double productPrice, String productDate, String productTime, String productCategory, String sellerName, String sellerAddress, String sellerPhone, String sellerEmail, String sellerId, String productState) {
+    public Product(String productId, String productImageUrl, String productName, String productDescription, double productPrice, String productDate, String productTime, String productCategory, String sellerName, Address sellerAddress, String sellerPhone, String sellerEmail, String sellerId, String productState) {
         this.productId = productId;
         this.productImageUrl = productImageUrl;
         this.productName = productName;
@@ -103,7 +103,7 @@ public class Product implements Serializable {
         return sellerName;
     }
 
-    public String getSellerAddress() {
+    public Address getSellerAddress() {
         return sellerAddress;
     }
 

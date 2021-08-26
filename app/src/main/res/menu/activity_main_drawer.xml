@@ -21,17 +21,6 @@
             android:iconTint="@color/white"
             android:title="Orders" />
 
-        <item
-            android:id="@+id/nav_search"
-            android:icon="@drawable/ic_baseline_search"
-            android:iconTint="@color/white"
-            android:title="Search" />
-
-        <item
-            android:id="@+id/nav_tools"
-            android:icon="@drawable/ic_baseline_settings"
-            android:iconTint="@color/white"
-            android:title="Tools" />
 
         <item
             android:id="@+id/nav_logout"

@@ -9,7 +9,9 @@ import androidx.lifecycle.ViewModelProviders;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,6 +49,8 @@ public class SellerAddNewProductActivity extends AppCompatActivity {
         initBinding();
         initViews();
         initViewModels();
+        EditText f;
+
 
         categoryName = getIntent().getExtras().get(SellerCategoryFragment.CATEGORY_EXTRA).toString();
 
@@ -65,8 +69,7 @@ public class SellerAddNewProductActivity extends AppCompatActivity {
             public void onChanged(Boolean aBoolean) {
                 progressDialog.dismiss();
                 Toast.makeText(SellerAddNewProductActivity.this, "Successfully...", Toast.LENGTH_SHORT).show();
-                finish();
-                startActivity(new Intent(SellerAddNewProductActivity.this, SellerCategoryFragment.class));
+                onBackPressed();
             }
         });
 
@@ -81,13 +84,16 @@ public class SellerAddNewProductActivity extends AppCompatActivity {
         binding.itemAddProductBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DateInfo dateInfo = new DateInfo();
+
+                String productId = dateInfo.getDate() + dateInfo.getTime();
                 String productName = binding.itemAddProductName.getText().toString().trim();
                 String productDesc = binding.itemAddProductDesc.getText().toString().trim();
                 String productPrice = binding.itemProductPrice.getText().toString().trim();
-                DateInfo dateInfo = new DateInfo();
 
                 if (seller != null) {
-                    Product product = new Product(null, imageUrl
+                    Product product = new Product(productId
+                            , imageUrl
                             , productName
                             , productDesc
                             , Double.parseDouble(productPrice)
@@ -95,11 +101,11 @@ public class SellerAddNewProductActivity extends AppCompatActivity {
                             , dateInfo.getTime()
                             , categoryName
                             , seller.getName()
-                            , seller.getAddress().get(0).getAddressName()
+                            , seller.getAddress().get(0)
                             , seller.getPhone()
                             , seller.getEmail()
                             , userViewModel.getUserId()
-                            , "Not Approved");
+                            , state);
 
                     addNewProduct(product);
                 }

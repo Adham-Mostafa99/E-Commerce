@@ -13,11 +13,13 @@ import android.widget.Toast;
 
 import com.modern_tec.ecommerce.R;
 import com.modern_tec.ecommerce.core.models.User;
+import com.modern_tec.ecommerce.data.shared_pref.UserType;
 import com.modern_tec.ecommerce.databinding.ActivityAdminLoginBinding;
 import com.modern_tec.ecommerce.presentation.viewmodels.UserViewModel;
 
 public class AdminLoginActivity extends AppCompatActivity {
     private ProgressDialog progressDialog;
+    private String adminDbName="Admins";
     private ActivityAdminLoginBinding binding;
     private UserViewModel userViewModel;
 
@@ -33,17 +35,19 @@ public class AdminLoginActivity extends AppCompatActivity {
             public void onChanged(Boolean aBoolean) {
                 progressDialog.dismiss();
                 if (aBoolean) {
+                    UserType userType = new UserType(AdminLoginActivity.this);
+                    userType.setType(adminDbName);
                     startActivity(new Intent(AdminLoginActivity.this, AdminProductActivity.class));
                     finish();
                 }
             }
         });
 
-        binding.loginBtn.setOnClickListener(new View.OnClickListener() {
+        binding.adminLoginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String emailStr = binding.emailLoginInput.getText().toString().trim();
-                String passStr = binding.passLoginInput.getText().toString().trim();
+                String emailStr = binding.adminLoginEmail.getText().toString().trim();
+                String passStr = binding.adminLoginPassword.getText().toString().trim();
 
                 if (isInputValid(emailStr, passStr)) {
                     showProgress("Login as Admin");

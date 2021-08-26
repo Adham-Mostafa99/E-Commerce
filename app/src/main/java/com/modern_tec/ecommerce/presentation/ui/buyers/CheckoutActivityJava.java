@@ -2,30 +2,29 @@ package com.modern_tec.ecommerce.presentation.ui.buyers;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.os.Bundle;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.wallet.AutoResolveHelper;
+import com.google.android.gms.wallet.PaymentData;
+import com.google.android.gms.wallet.PaymentsClient;
 import com.modern_tec.ecommerce.R;
 import com.modern_tec.ecommerce.core.date.DateInfo;
 import com.modern_tec.ecommerce.core.models.Address;
 import com.modern_tec.ecommerce.core.models.CartProduct;
 import com.modern_tec.ecommerce.core.models.Order;
 import com.modern_tec.ecommerce.core.models.User;
+import com.modern_tec.ecommerce.data.payment.Payment;
 import com.modern_tec.ecommerce.databinding.ActivityCheckoutJavaBinding;
 import com.modern_tec.ecommerce.presentation.adapters.CartAdapter;
 import com.modern_tec.ecommerce.presentation.viewmodels.CartViewModel;
 import com.modern_tec.ecommerce.presentation.viewmodels.OrderViewModel;
 import com.modern_tec.ecommerce.presentation.viewmodels.UserViewModel;
-import com.paymob.acceptsdk.IntentConstants;
-import com.paymob.acceptsdk.PayActivity;
-import com.paymob.acceptsdk.PayActivityIntentKeys;
-import com.paymob.acceptsdk.PayResponseKeys;
-import com.paymob.acceptsdk.SaveCardResponseKeys;
-import com.paymob.acceptsdk.ThreeDSecureWebViewActivty;
-import com.paymob.acceptsdk.ToastMaker;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -38,6 +37,9 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
@@ -48,6 +50,9 @@ import java.util.Map;
 import java.util.Objects;
 
 import static com.modern_tec.ecommerce.presentation.ui.buyers.BuyerAddressActivity.ADDRESS_EXTRA;
+import static com.modern_tec.ecommerce.presentation.ui.buyers.PaymentActivity.CASH_PAYMENT;
+import static com.modern_tec.ecommerce.presentation.ui.buyers.PaymentActivity.GOOGLE_PAYMENT;
+import static com.modern_tec.ecommerce.presentation.ui.buyers.PaymentActivity.PAYMENT_METHOD_EXTRA;
 
 
 public class CheckoutActivityJava extends AppCompatActivity {
@@ -56,15 +61,20 @@ public class CheckoutActivityJava extends AppCompatActivity {
     CartViewModel cartViewModel;
     UserViewModel userViewModel;
     OrderViewModel orderViewModel;
+    PaymentsClient paymentsClient;
 
     List<CartProduct> cartProductList;
+    Order order;
     User user;
     Address address = null;
+    String paymentMethod = null;
     double subTotal = 0;
     double discount = 0;
     double shipping = 25;
     double total;
     String state = "not shipped";
+
+    Activity activity = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,12 +82,16 @@ public class CheckoutActivityJava extends AppCompatActivity {
         initBinding();
         initAdapter();
         initViewModels();
+        initPayment();
+
 
         address = (Address) getIntent().getSerializableExtra(ADDRESS_EXTRA);
 
         if (address != null) {
             setAddressData();
         }
+
+        paymentMethod = getIntent().getStringExtra(PAYMENT_METHOD_EXTRA);
 
 
         userViewModel.getUserInfo();
@@ -121,10 +135,26 @@ public class CheckoutActivityJava extends AppCompatActivity {
             public void onClick(View v) {
                 DateInfo dateInfo = new DateInfo();
                 String id = dateInfo.getDate() + dateInfo.getTime();
-                Order order = new Order(id, cartProductList, user.getName(), user.getEmail()
+                order = new Order(id, cartProductList, user.getName(), user.getEmail()
                         , address, dateInfo.getTime(), dateInfo.getDate(), total, state);
 
-                orderViewModel.createOrder(order);
+                order.setOrderPaymentMethod(paymentMethod);
+
+
+                if (paymentMethod.equals(GOOGLE_PAYMENT)) {
+                    binding.checkOutBtn.setClickable(false);
+
+                    try {
+                        Payment.loadPaymentData(activity, paymentsClient
+                                , String.valueOf(total));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                } else if (paymentMethod.equals(CASH_PAYMENT)) {
+                    orderViewModel.createOrder(order);
+
+                }
             }
         });
 
@@ -147,6 +177,23 @@ public class CheckoutActivityJava extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    private void initPayment() {
+        binding.checkOutBtn.setClickable(false);
+        paymentsClient = Payment.getPaymentsClient(this);
+
+        try {
+            Payment.isReadyToPay(paymentsClient, this, new Payment.ReadyToPay() {
+                @Override
+                public void ready() {
+                    binding.checkOutBtn.setClickable(true);
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -211,4 +258,32 @@ public class CheckoutActivityJava extends AppCompatActivity {
     }
 
 
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            // value passed in AutoResolveHelper
+            case Payment.LOAD_PAYMENT_DATA_REQUEST_CODE:
+                switch (resultCode) {
+
+                    case Activity.RESULT_OK:
+//                        PaymentData paymentData = PaymentData.getFromIntent(data);
+//                        handlePaymentSuccess(paymentData);
+
+                        orderViewModel.createOrder(order);
+                        break;
+
+                    case Activity.RESULT_CANCELED:
+                        // The user cancelled the payment attempt
+                        break;
+
+                    case AutoResolveHelper.RESULT_ERROR:
+                        Status status = AutoResolveHelper.getStatusFromIntent(data);
+                        Log.v("Error:", status.getStatusCode() + "");
+                        break;
+                }
+
+                // Re-enables the Google Pay payment button.
+                binding.checkOutBtn.setClickable(true);
+        }
+    }
 }

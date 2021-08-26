@@ -59,7 +59,7 @@ public class BuyerAddressActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (chosenAddress != null)
-                    startActivity(new Intent(BuyerAddressActivity.this, CheckoutActivityJava.class)
+                    startActivity(new Intent(BuyerAddressActivity.this, PaymentActivity.class)
                                     .putExtra(ADDRESS_EXTRA, chosenAddress));
                 else
                     Toast.makeText(BuyerAddressActivity.this, "Please choose address", Toast.LENGTH_SHORT).show();

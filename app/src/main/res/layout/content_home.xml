@@ -33,7 +33,7 @@
             android:layout_width="1dp"
             android:layout_height="30dp"
             android:layout_marginHorizontal="4dp"
-            android:src="@color/colorHint" />
+            android:src="@color/borders" />
 
         <EditText
             android:id="@+id/search_edit"

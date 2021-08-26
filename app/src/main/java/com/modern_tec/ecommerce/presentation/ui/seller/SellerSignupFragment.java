@@ -46,11 +46,16 @@ public class SellerSignupFragment extends Fragment {
                 String email = binding.sellerRegisterEmail.getText().toString().trim();
                 String pass = binding.sellerRegisterPassword.getText().toString().trim();
                 String phone = binding.sellerRegisterPhone.getText().toString().trim();
-                String address = binding.sellerRegisterAddress.getText().toString().trim();
+                String addressLane = binding.sellerRegisterAddressLane.getText().toString().trim();
+                String city = binding.sellerRegisterCity.getText().toString().trim();
+                String postalCode = binding.sellerRegisterPostalCode.getText().toString().trim();
+
+                String addressId = addressLane + city + postalCode;
                 ArrayList<Address> addressList = new ArrayList<>();
-                //TODO Add Address for seller
-                addressList.add(new Address("10","egypt","giza","48850","111452"));
-                if (isValid(name, email, pass, phone, address)) {
+                addressList.add(new Address(
+                        addressId, addressLane, city, postalCode, phone));
+
+                if (isValid(name, email, pass, phone, addressLane, city, postalCode)) {
                     Seller seller = new Seller(email, name, null, addressList, phone, pass);
                     userViewModel.createSellerAccount(seller);
                     showProgress("Registration");
@@ -89,7 +94,7 @@ public class SellerSignupFragment extends Fragment {
         userViewModel = ViewModelProviders.of(this).get(UserViewModel.class);
     }
 
-    private boolean isValid(String name, String email, String pass, String phone, String address) {
+    private boolean isValid(String name, String email, String pass, String phone, String address, String city, String postalCode) {
         if (name.isEmpty()) {
             binding.signupLayoutName.setError("write your name");
             return false;
@@ -103,7 +108,15 @@ public class SellerSignupFragment extends Fragment {
             binding.signupLayoutPhone.setError("write your phone");
             return false;
         } else if (address.isEmpty()) {
-            binding.signupLayoutAddress.setError("write your address");
+            binding.signupLayoutAddressLane.setError("write your address");
+            return false;
+        } else if (city.isEmpty()) {
+            binding.signupLayoutCity.setError("write your city");
+            binding.sellerRegisterCity.setFocusable(true);
+            return false;
+        } else if (postalCode.isEmpty()) {
+            binding.signupLayoutPostalCode.setError("write your postal code");
+            binding.sellerRegisterPostalCode.setFocusable(true);
             return false;
         }
         return true;

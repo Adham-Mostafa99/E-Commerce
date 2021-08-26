@@ -4,34 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".presentation.ui.admin.AdminProductActivity">
 
-    <LinearLayout
-        android:id="@+id/admin_products_linear_1"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/admin_product_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:background="@color/colorPrimary"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="12dp">
+        android:background="@color/white"
+        app:titleTextColor="@color/black" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Admin Products"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/admin_no_product"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="No Product to show"
+        android:textColor="@color/black"
+        android:visibility="invisible"
+        android:textSize="24sp" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/admin_product_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/admin_products_linear_1"
+        android:layout_below="@id/admin_product_toolbar"
         android:layout_centerInParent="true"
         android:scrollbars="vertical"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
         tools:listitem="@layout/product_item" />
 </RelativeLayout>

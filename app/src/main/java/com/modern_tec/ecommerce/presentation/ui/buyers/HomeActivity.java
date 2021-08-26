@@ -3,6 +3,7 @@ package com.modern_tec.ecommerce.presentation.ui.buyers;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
@@ -44,6 +45,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     public static final String CLICKED_ITEM_EXTRA = "clicked";
     public static final String CLICKED_CATEGORY_EXTRA = "category clicked";
+    public static final String SEARCHED_PRODUCT_EXTRA = "searched product";
 
     private ActivityHomeBinding binding;
 
@@ -68,8 +70,6 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         initToolbar();
         initNavigationDrawable();
 
-        //TODO add on click category
-
         userViewModel.getUserInfo();
         productViewModel.getProducts();
 
@@ -83,6 +83,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                             .load(user.getPhotoUrl())
                             .placeholder(R.drawable.profile)
                             .into(userPhoto);
+
                 }
             }
         });
@@ -100,6 +101,17 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomeActivity.this, FeaturesActivity.class));
+            }
+        });
+
+        binding.appBarHome.contentHome.searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String productName = binding.appBarHome.contentHome.searchEdit.getText().toString().trim();
+                if (!productName.isEmpty()) {
+                    startActivity(new Intent(HomeActivity.this, FeaturesActivity.class)
+                            .putExtra(SEARCHED_PRODUCT_EXTRA, productName));
+                }
             }
         });
 
@@ -188,8 +200,8 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onBackPressed() {
-        if (binding.drawerLayout.isDrawerOpen(GravityCompat.START))
-            binding.drawerLayout.closeDrawer(GravityCompat.START);
+        if (binding.drawerLayout.isDrawerOpen(Gravity.LEFT))
+            binding.drawerLayout.closeDrawer(Gravity.LEFT);
         else
 //            super.onBackPressed();
             Toast.makeText(this, "Exit!", Toast.LENGTH_SHORT).show();
@@ -209,19 +221,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_orders:
                 startActivity(new Intent(this, OrdersActivity.class));
                 break;
-            case R.id.nav_search:
-                startActivity(new Intent(this, SearchProductActivity.class));
-                break;
-            case R.id.nav_tools:
-                //TODO will add later
-                break;
             case R.id.nav_logout:
                 startActivity(new Intent(HomeActivity.this, MainActivity.class)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK));
                 userViewModel.logOut();
                 break;
         }
-        binding.drawerLayout.closeDrawer(GravityCompat.START);
+        binding.drawerLayout.closeDrawer(Gravity.LEFT);
         return true;
     }
 

@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.modern_tec.ecommerce.R;
 import com.modern_tec.ecommerce.data.shared_pref.UserType;
+import com.modern_tec.ecommerce.presentation.ui.admin.AdminProductActivity;
 import com.modern_tec.ecommerce.presentation.ui.buyers.HomeActivity;
 import com.modern_tec.ecommerce.presentation.ui.seller.SellerMainActivity;
 import com.modern_tec.ecommerce.presentation.viewmodels.UserViewModel;
@@ -23,7 +24,7 @@ public class SplashActivity extends AppCompatActivity {
     private String sellerDbName = "Sellers";
     private String AdminDbName = "Admins";
 
-    private String currentType="";
+    private String currentType = "";
 
 
     UserViewModel userViewModel;
@@ -47,6 +48,9 @@ public class SplashActivity extends AppCompatActivity {
                 } else if (currentType.equals(sellerDbName)) {
                     startActivity(new Intent(SplashActivity.this, SellerMainActivity.class));
                     finish();
+                } else if (currentType.equals(AdminDbName)) {
+                    startActivity(new Intent(SplashActivity.this, AdminProductActivity.class));
+                    finish();
                 } else {
                     startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     finish();
@@ -68,6 +72,8 @@ public class SplashActivity extends AppCompatActivity {
                 currentType = sellerDbName;
             } else if (userType.getType().equals(UserDbName)) {
                 currentType = UserDbName;
+            } else if (userType.getType().equals(AdminDbName)) {
+                currentType = AdminDbName;
             } else {
                 userViewModel.logOut();
             }

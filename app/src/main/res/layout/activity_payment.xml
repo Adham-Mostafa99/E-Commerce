@@ -4,27 +4,135 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".presentation.ui.buyers.PaymentActivity">
 
+    <ImageView
+        android:id="@+id/payment_back_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="26dp"
+        android:src="@drawable/ic_baseline_keyboard_backspace" />
+
     <TextView
-        android:id="@+id/payment_price"
+        android:id="@+id/payment_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/payment_back_arrow"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/arsenal"
+        android:text="Payment Methods"
+        android:textColor="@color/black"
+        android:textSize="30sp" />
+
+
+    <RelativeLayout
+        android:id="@+id/payment_layout_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-        android:text="17000"
-        android:textAlignment="center"
-        android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        android:layout_below="@id/payment_txt"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp">
+
+        <ImageView
+            android:id="@+id/google_pay_icon"
+            android:layout_width="74dp"
+            android:layout_height="74dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/google_pay_mark" />
+
+        <TextView
+            android:id="@+id/google_pay_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="14dp"
+            android:layout_toEndOf="@id/google_pay_icon"
+            android:text="Google Pay"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/google_pay_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true" />
+
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/boarder_1"
+        android:layout_width="match_parent"
+        android:layout_height="0.60dp"
+        android:layout_below="@id/payment_layout_1"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginVertical="8dp"
+        android:src="@color/borders" />
+
+    <RelativeLayout
+        android:id="@+id/payment_layout_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/boarder_1"
+        android:layout_marginHorizontal="24dp">
+
+
+        <RelativeLayout
+            android:id="@+id/cash_icon"
+            android:layout_width="74dp"
+            android:layout_height="74dp"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true">
+
+            <ImageView
+                android:layout_width="74dp"
+                android:layout_height="45dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/cash_on_delivery_border" />
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerInParent="true"
+                android:src="@drawable/cash" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/cash_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="14dp"
+            android:layout_toEndOf="@id/cash_icon"
+            android:text="Cash On Delivery"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <RadioButton
+            android:id="@+id/cash_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true" />
+
+    </RelativeLayout>
+
 
     <Button
-        android:id="@+id/payment_btn"
+        android:id="@+id/payment_next_btn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/payment_price"
-        android:layout_margin="16dp"
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="24dp"
         android:background="@drawable/buttons"
-        android:text="Confirm"
-        android:textColor="@color/white" />
+        android:text="Continue"
+        android:textColor="@color/white"
+        android:textSize="20sp" />
 
 </RelativeLayout>

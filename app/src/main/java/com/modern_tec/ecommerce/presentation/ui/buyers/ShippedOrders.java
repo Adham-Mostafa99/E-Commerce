@@ -103,6 +103,7 @@ public class ShippedOrders extends Fragment {
                 order.setOrderId(id);
                 order.setOrderDate(dateInfo.getDate());
                 order.setOrderTime(dateInfo.getTime());
+                order.setState("not shipped");
                 orderViewModel.createOrder(order);
 
 

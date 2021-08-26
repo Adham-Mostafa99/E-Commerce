@@ -42,7 +42,6 @@
         <activity android:name=".presentation.ui.buyers.OrdersActivity" />
         <activity android:name=".presentation.ui.seller.SellerMaintainProductActivity" />
         <activity android:name=".presentation.ui.admin.AdminProductActivity" />
-        <activity android:name=".presentation.ui.buyers.SearchProductActivity" />
         <activity android:name=".presentation.ui.seller.SellerUserProductsActivity" />
         <activity android:name=".presentation.ui.seller.SellerUserOrderActivity" />
         <activity android:name=".presentation.ui.buyers.CartActivity" />
@@ -62,6 +61,10 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true" />
     </application>
 
 </manifest>

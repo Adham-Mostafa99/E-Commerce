@@ -3,161 +3,208 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".presentation.ui.admin.AdminUnApprovedProductDetailsActivity">
+
+    <ImageView
+        android:id="@+id/admin_back_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="26dp"
+        android:src="@drawable/ic_baseline_keyboard_backspace" />
+
+
+    <TextView
+        android:id="@+id/admin_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/admin_back_arrow"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="24dp"
+        android:fontFamily="@font/arsenal"
+        android:text="Product Details"
+        android:textColor="@color/black"
+        android:textSize="30sp" />
+
 
     <ImageView
         android:id="@+id/admin_product_image_details"
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        android:layout_alignParentTop="true"
+        android:layout_below="@id/admin_txt"
         android:layout_centerHorizontal="true"
+        android:layout_margin="24dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/place_holder" />
+        android:src="@drawable/product_placeholder" />
 
-    <TextView
-        android:id="@+id/admin_product_details"
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@id/admin_approve_product_btn"
         android:layout_below="@id/admin_product_image_details"
-        android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="10dp"
-        android:gravity="start"
-        android:text="Product Details"
-        android:textColor="@color/colorPrimary"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+        android:fitsSystemWindows="true"
+        android:scrollbars="none">
 
-    <TextView
-        android:id="@+id/admin_product_name_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/admin_product_details"
-        android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="Product Name"
-        android:textSize="20sp"
-        android:textStyle="bold" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/admin_product_desc_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/admin_product_name_details"
-        android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="Product Description"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/admin_product_name_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="24dp"
+                android:text="Product Name"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/admin_product_category_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/admin_product_desc_details"
-        android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="Product Category"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/admin_product_category_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/admin_product_name_details"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="4dp"
+                android:text="Product Category"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/admin_product_price_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/admin_product_category_details"
-        android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="1500.0 EG"
-        android:textSize="20sp"
-        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/admin_seller_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/admin_product_price_details"
-        android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="20dp"
-        android:gravity="start"
-        android:text="Seller Details"
-        android:textColor="@color/colorPrimary"
-        android:textSize="22sp"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/admin_product_desc_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/admin_product_category_details"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="4dp"
+                android:text="Product Description"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/admin_seller_name_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/admin_seller_details"
-        android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="Seller Name"
-        android:textSize="20sp"
-        android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/admin_seller_email_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/admin_seller_name_details"
-        android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:text="seller Email"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/admin_product_price_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/admin_product_desc_details"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="4dp"
+                android:text="1500.0 EG"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/admin_seller_phone_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/admin_seller_email_details"
-        android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:maxLines="2"
-        android:text="seller phone"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/admin_seller_details"
+                android:layout_width="match_parent"
+                android:layout_height="0.75dp"
+                android:layout_below="@id/admin_product_price_details"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginVertical="12dp"
+                android:background="@color/borders" />
 
-    <TextView
-        android:id="@+id/admin_seller_address_details"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/admin_seller_phone_details"
-        android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="15dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:maxLines="2"
-        android:text="seller address"
-        android:textSize="16sp"
-        android:textStyle="bold" />
+            <TextView
+                android:id="@+id/admin_seller_name_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/admin_seller_details"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="4dp"
+                android:text="Seller Name"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/admin_seller_email_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/admin_seller_name_details"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="4dp"
+                android:text="seller Email"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/admin_seller_phone_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/admin_seller_email_details"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="4dp"
+                android:maxLines="3"
+                android:text="seller phone"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/admin_seller_address_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/admin_seller_phone_details"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="4dp"
+                android:maxLines="2"
+                android:text="seller address lane"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/admin_seller_address_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/admin_seller_address_details"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="4dp"
+                android:maxLines="2"
+                android:text="seller city"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/admin_seller_address_postal_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/admin_seller_address_city"
+                android:layout_centerHorizontal="true"
+                android:layout_marginHorizontal="24dp"
+                android:layout_marginTop="4dp"
+                android:maxLines="2"
+                android:text="seller postal code"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="24dp"
+                android:layout_below="@id/admin_seller_address_postal_code" />
+        </RelativeLayout>
+    </ScrollView>
+
 
     <Button
         android:id="@+id/admin_approve_product_btn"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_margin="15dp"
-        android:background="@color/colorPrimary"
-        android:elevation="6dp"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/admin_buttons"
         android:text="Approve Product"
         android:textColor="@color/white"
-        android:textSize="18sp" />
+        android:textSize="20sp" />
+
+
 </RelativeLayout>

@@ -288,15 +288,16 @@ public class ProductService {
     public void getProductByName(String productName) {
         productReference
                 .child(PRODUCT_REF_NAME)
+                .orderByChild("productName")
+                .startAt(productName)
+                .endAt(productName + "\uf8ff")//for get product like Fre" I could get the records having "Fred, Freddy, Frey"
                 .addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
                         List<Product> productList = new ArrayList<>();
                         for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                             if (dataSnapshot.exists()) {
-                                Product product = dataSnapshot.getValue(Product.class);
-                                if (product.getProductName().equals(productName))
-                                    productList.add(product);
+                                productList.add(dataSnapshot.getValue(Product.class));
                             }
                         }
                         productMutableLiveData.setValue(productList);

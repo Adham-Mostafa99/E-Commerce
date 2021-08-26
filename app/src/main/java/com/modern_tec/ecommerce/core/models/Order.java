@@ -15,6 +15,7 @@ public class Order implements Parcelable {
     private String orderTime;
     private String orderDate;
     private double totalPrice;
+    private String orderPaymentMethod;
     private String state;
 
 
@@ -30,6 +31,7 @@ public class Order implements Parcelable {
         this.state = state;
     }
 
+
     protected Order(Parcel in) {
         orderId = in.readString();
         cartProductList = in.createTypedArrayList(CartProduct.CREATOR);
@@ -38,6 +40,7 @@ public class Order implements Parcelable {
         orderTime = in.readString();
         orderDate = in.readString();
         totalPrice = in.readDouble();
+        orderPaymentMethod = in.readString();
         state = in.readString();
     }
 
@@ -50,6 +53,7 @@ public class Order implements Parcelable {
         dest.writeString(orderTime);
         dest.writeString(orderDate);
         dest.writeDouble(totalPrice);
+        dest.writeString(orderPaymentMethod);
         dest.writeString(state);
     }
 
@@ -114,7 +118,6 @@ public class Order implements Parcelable {
     }
 
 
-
     public double getTotalPrice() {
         return totalPrice;
     }
@@ -128,6 +131,14 @@ public class Order implements Parcelable {
     }
 
 
+    public void setOrderPaymentMethod(String orderPaymentMethod) {
+        this.orderPaymentMethod = orderPaymentMethod;
+    }
+
+    public String getOrderPaymentMethod() {
+        return orderPaymentMethod;
+    }
+
     @Override
     public String toString() {
         return "Order{" +
@@ -139,6 +150,7 @@ public class Order implements Parcelable {
                 ", orderTime='" + orderTime + '\'' +
                 ", orderDate='" + orderDate + '\'' +
                 ", totalPrice=" + totalPrice +
+                ", orderPaymentMethod='" + orderPaymentMethod + '\'' +
                 ", state='" + state + '\'' +
                 '}';
     }

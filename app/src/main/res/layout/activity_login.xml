@@ -38,9 +38,9 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
-        app:toggle_selectedBackgroundColor="#667EEA"
+        app:justifyContent="center"
         app:toggle_backgroundColor="@color/white"
-        app:justifyContent="center">
+        app:toggle_selectedBackgroundColor="#667EEA">
 
         <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
             android:id="@+id/buyer_btn"
@@ -61,72 +61,20 @@
         android:id="@+id/login_frame"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@id/login_admin"
         android:layout_below="@id/login_txt"
-        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
 
+    <TextView
+        android:id="@+id/login_admin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="8dp"
+        android:text="Login as Admin"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20sp" />
 
-    <!--    <RelativeLayout-->
-    <!--        android:id="@+id/linear_layout_1"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_below="@id/pass_login_input"-->
-    <!--        android:layout_marginHorizontal="17dp"-->
-    <!--        android:layout_marginTop="4dp">-->
-
-    <!--        <com.rey.material.widget.CheckBox-->
-    <!--            android:id="@+id/remember_me_chkbx"-->
-    <!--            style="@style/Material.Drawable.CheckBox"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_alignParentStart="true"-->
-    <!--            android:layout_centerVertical="true"-->
-    <!--            android:gravity="center_vertical"-->
-    <!--            android:text="Remember me"-->
-    <!--            android:textColor="@color/colorPrimary"-->
-    <!--            android:textSize="16sp"-->
-    <!--            android:textStyle="bold"-->
-    <!--            app:cbd_strokeColor="@color/colorPrimary" />-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/forget_pass_link"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:layout_alignParentEnd="true"-->
-    <!--            android:layout_centerVertical="true"-->
-    <!--            android:layout_marginStart="6dp"-->
-    <!--            android:text="Forget Password?"-->
-    <!--            android:textColor="@color/colorPrimary"-->
-    <!--            android:textSize="16sp"-->
-    <!--            android:textStyle="bold" />-->
-
-    <!--    </RelativeLayout>-->
-
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/seller_panel_link"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_below="@id/login_btn"-->
-    <!--        android:layout_alignParentEnd="true"-->
-    <!--        android:layout_centerVertical="true"-->
-    <!--        android:layout_marginEnd="24dp"-->
-    <!--        android:text="Want to be a seller?"-->
-    <!--        android:textColor="@color/colorPrimary"-->
-    <!--        android:textSize="20sp"-->
-    <!--        android:textStyle="bold" />-->
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/admin_panel_link"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_below="@id/login_btn"-->
-    <!--        android:layout_alignParentStart="true"-->
-    <!--        android:layout_centerVertical="true"-->
-    <!--        android:layout_marginStart="24dp"-->
-    <!--        android:text="Admin login"-->
-    <!--        android:textColor="@color/colorPrimary"-->
-    <!--        android:textSize="20sp"-->
-    <!--        android:textStyle="bold" />-->
 
 </RelativeLayout>

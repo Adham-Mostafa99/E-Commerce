@@ -25,6 +25,7 @@ public class AdminUnApprovedProductDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         initBinding();
         initViewModels();
+
         product = (Product) getIntent().getSerializableExtra(AdminProductActivity.PRODUCT_EXTRA);
 
         if (product.getProductId() != null) {
@@ -44,6 +45,13 @@ public class AdminUnApprovedProductDetailsActivity extends AppCompatActivity {
             public void onChanged(Boolean aBoolean) {
                 Toast.makeText(AdminUnApprovedProductDetailsActivity.this, "Product Approved", Toast.LENGTH_SHORT).show();
                 finish();
+            }
+        });
+
+        binding.adminBackArrow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
 
@@ -67,7 +75,9 @@ public class AdminUnApprovedProductDetailsActivity extends AppCompatActivity {
         binding.adminSellerNameDetails.setText(product.getSellerName());
         binding.adminSellerEmailDetails.setText(product.getSellerEmail());
         binding.adminSellerPhoneDetails.setText(product.getSellerPhone());
-        binding.adminSellerAddressDetails.setText(product.getSellerAddress());
+        binding.adminSellerAddressDetails.setText(product.getSellerAddress().getAddressName());
+        binding.adminSellerAddressCity.setText(product.getSellerAddress().getCity());
+        binding.adminSellerAddressPostalCode.setText(product.getSellerAddress().getPostalCode());
     }
 
     private void initBinding() {
