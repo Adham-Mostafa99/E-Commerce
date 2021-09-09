@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.modern_tec.ecommerce.R;
 import com.modern_tec.ecommerce.databinding.ActivityLoginBinding;
 import com.modern_tec.ecommerce.presentation.ui.admin.AdminLoginActivity;
@@ -17,7 +18,7 @@ import com.modern_tec.ecommerce.presentation.ui.buyers.BuyerLoginFragment;
 import com.modern_tec.ecommerce.presentation.ui.seller.SellerLoginFragment;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
     ActivityLoginBinding binding;
 
     MutableLiveData<Fragment> currentFragment = new MutableLiveData<>();
@@ -78,6 +79,17 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, AdminLoginActivity.class));
             }
         });
+
+    }
+
+    @Override
+    protected void networkIsConnect() {
+        binding.error.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    protected void networkIsNotConnect() {
+        binding.error.setVisibility(View.VISIBLE);
 
     }
 

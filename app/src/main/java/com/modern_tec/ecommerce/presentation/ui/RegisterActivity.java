@@ -14,7 +14,7 @@ import com.modern_tec.ecommerce.databinding.ActivityRegisterBinding;
 import com.modern_tec.ecommerce.presentation.ui.buyers.BuyerSignupFragment;
 import com.modern_tec.ecommerce.presentation.ui.seller.SellerSignupFragment;
 
-public class RegisterActivity extends AppCompatActivity {
+public class RegisterActivity extends BaseActivity {
 
     ActivityRegisterBinding binding;
     MutableLiveData<Fragment> currentFragment = new MutableLiveData<>();
@@ -67,6 +67,17 @@ public class RegisterActivity extends AppCompatActivity {
                         .commit();
             }
         });
+
+    }
+
+    @Override
+    protected void networkIsConnect() {
+        binding.error.setVisibility(View.INVISIBLE);
+    }
+
+    @Override
+    protected void networkIsNotConnect() {
+        binding.error.setVisibility(View.VISIBLE);
 
     }
 

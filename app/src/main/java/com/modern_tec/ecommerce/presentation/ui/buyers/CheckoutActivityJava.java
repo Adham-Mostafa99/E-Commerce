@@ -18,6 +18,7 @@ import com.modern_tec.ecommerce.core.models.User;
 import com.modern_tec.ecommerce.data.payment.Payment;
 import com.modern_tec.ecommerce.databinding.ActivityCheckoutJavaBinding;
 import com.modern_tec.ecommerce.presentation.adapters.CartAdapter;
+import com.modern_tec.ecommerce.presentation.ui.BaseActivity;
 import com.modern_tec.ecommerce.presentation.viewmodels.CartViewModel;
 import com.modern_tec.ecommerce.presentation.viewmodels.OrderViewModel;
 import com.modern_tec.ecommerce.presentation.viewmodels.UserViewModel;
@@ -55,7 +56,7 @@ import static com.modern_tec.ecommerce.presentation.ui.buyers.PaymentActivity.GO
 import static com.modern_tec.ecommerce.presentation.ui.buyers.PaymentActivity.PAYMENT_METHOD_EXTRA;
 
 
-public class CheckoutActivityJava extends AppCompatActivity {
+public class CheckoutActivityJava extends BaseActivity {
     ActivityCheckoutJavaBinding binding;
     CartAdapter adapter;
     CartViewModel cartViewModel;
@@ -75,6 +76,8 @@ public class CheckoutActivityJava extends AppCompatActivity {
     String state = "not shipped";
 
     Activity activity = this;
+
+    boolean isNetworkAvailable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -133,27 +136,32 @@ public class CheckoutActivityJava extends AppCompatActivity {
         binding.checkOutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DateInfo dateInfo = new DateInfo();
-                String id = dateInfo.getDate() + dateInfo.getTime();
-                order = new Order(id, cartProductList, user.getName(), user.getEmail()
-                        , address, dateInfo.getTime(), dateInfo.getDate(), total, state);
+                if (isNetworkAvailable) {
+                    DateInfo dateInfo = new DateInfo();
+                    String id = dateInfo.getDate() + dateInfo.getTime();
+                    order = new Order(id, cartProductList, user.getName(), user.getEmail()
+                            , address, dateInfo.getTime(), dateInfo.getDate(), total, state);
 
-                order.setOrderPaymentMethod(paymentMethod);
+                    order.setOrderPaymentMethod(paymentMethod);
 
 
-                if (paymentMethod.equals(GOOGLE_PAYMENT)) {
-                    binding.checkOutBtn.setClickable(false);
+                    if (paymentMethod.equals(GOOGLE_PAYMENT)) {
+                        binding.checkOutBtn.setClickable(false);
 
-                    try {
-                        Payment.loadPaymentData(activity, paymentsClient
-                                , String.valueOf(total));
-                    } catch (JSONException e) {
-                        e.printStackTrace();
+                        try {
+                            Payment.loadPaymentData(activity, paymentsClient
+                                    , String.valueOf(total));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    } else if (paymentMethod.equals(CASH_PAYMENT)) {
+                        orderViewModel.createOrder(order);
+
                     }
-
-                } else if (paymentMethod.equals(CASH_PAYMENT)) {
-                    orderViewModel.createOrder(order);
-
+                }
+                else {
+                    Toast.makeText(activity, "Network Failed, please check your network.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -178,6 +186,17 @@ public class CheckoutActivityJava extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    protected void networkIsConnect() {
+        isNetworkAvailable = true;
+
+    }
+
+    @Override
+    protected void networkIsNotConnect() {
+        isNetworkAvailable = false;
     }
 
     private void initPayment() {

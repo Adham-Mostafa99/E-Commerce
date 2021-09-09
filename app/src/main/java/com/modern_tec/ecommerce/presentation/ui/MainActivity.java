@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.snackbar.Snackbar;
 import com.modern_tec.ecommerce.data.network.ConnectionLiveData;
 import com.modern_tec.ecommerce.databinding.ActivityMainBinding;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
-    ConnectionLiveData connectionLiveData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,21 +20,12 @@ public class MainActivity extends BaseActivity {
         initBinding();
 
 
-        intentToLogin(this);
-        intentToRegister(this);
+            intentToLogin(this);
+            intentToRegister(this);
 
 
     }
 
-    @Override
-    protected void networkIsConnect() {
-
-    }
-
-    @Override
-    protected void networkIsNotConnect() {
-
-    }
 
 
     private void initBinding() {
