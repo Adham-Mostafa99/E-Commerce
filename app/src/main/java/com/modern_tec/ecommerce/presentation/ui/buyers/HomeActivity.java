@@ -1,6 +1,7 @@
 package com.modern_tec.ecommerce.presentation.ui.buyers;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -26,6 +27,7 @@ import com.google.android.material.navigation.NavigationView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -158,6 +160,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private void initNavigationDrawable() {
         initActionBarDrawerToggle();
         binding.navView.setNavigationItemSelectedListener(this);
+
+
+
+        //Translucent Status Bar
+//        getWindow().setStatusBarColor(Color.parseColor("#20111111"));
+//        getWindow().setNavigationBarColor(Color.parseColor("#20111111"));
+
 
 
         headerView = binding.navView.getHeaderView(0);

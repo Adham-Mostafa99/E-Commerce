@@ -1,16 +1,16 @@
 package com.modern_tec.ecommerce.presentation.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.modern_tec.ecommerce.data.network.ConnectionLiveData;
 import com.modern_tec.ecommerce.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     ActivityMainBinding binding;
+    ConnectionLiveData connectionLiveData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,11 +24,21 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void networkIsConnect() {
+
+    }
+
+    @Override
+    protected void networkIsNotConnect() {
+
+    }
+
+
     private void initBinding() {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
     }
-
 
 
     private void intentToLogin(Context context) {

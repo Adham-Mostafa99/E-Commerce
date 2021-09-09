@@ -12,13 +12,6 @@ import com.modern_tec.ecommerce.core.models.User;
 import com.modern_tec.ecommerce.data.database.Account;
 
 public class UserRepo {
-    private LiveData<Boolean> isLogin;
-    private MutableLiveData<Boolean> isCheckedCreated;
-    private MutableLiveData<Boolean> isCheckedLogged;
-    private LiveData<Boolean> isAccountCreated;
-    private LiveData<User> userLiveData;
-    private LiveData<User> updatedProfile;
-
 
     Account account;
 
