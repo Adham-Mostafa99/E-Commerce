@@ -57,6 +57,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private View headerView;
     private ProductAdapter productAdapter;
+    private ProductAdapter favProductsAdapter;
     private CategoryAdapter categoryAdapter;
 
     private TextView userName;
@@ -98,6 +99,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                     }
                 });
 
+        userViewModel.getUserFavProducts().observe(this, new Observer<List<Product>>() {
+            @Override
+            public void onChanged(List<Product> products) {
+                favProductsAdapter.submitList(products);
+            }
+        });
 
         binding.appBarHome.contentHome.featuredSeeAllBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,8 +142,13 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         binding.appBarHome.contentHome.recyclerCategory.setAdapter(categoryAdapter);
         categoryAdapter.submitList(categoryViewModel.getCategories());
 
+        favProductsAdapter = new ProductAdapter(this);
+        binding.appBarHome.contentHome.recyclerMenuFav.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
+        binding.appBarHome.contentHome.recyclerMenuFav.setAdapter(favProductsAdapter);
+        binding.appBarHome.contentHome.recyclerMenuFav.setHasFixedSize(true);
 
         onClickProductItem();
+        onClickFavProductItem();
         onClickCategory();
     }
 
@@ -162,11 +174,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         binding.navView.setNavigationItemSelectedListener(this);
 
 
-
         //Translucent Status Bar
 //        getWindow().setStatusBarColor(Color.parseColor("#20111111"));
 //        getWindow().setNavigationBarColor(Color.parseColor("#20111111"));
-
 
 
         headerView = binding.navView.getHeaderView(0);
@@ -191,6 +201,16 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
     private void onClickProductItem() {
         productAdapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Product product) {
+                startActivity(new Intent(HomeActivity.this, ProductDetailsActivity.class)
+                        .putExtra(CLICKED_ITEM_EXTRA, product));
+            }
+        });
+    }
+
+    private void onClickFavProductItem() {
+        favProductsAdapter.setOnItemClickListener(new ProductAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Product product) {
                 startActivity(new Intent(HomeActivity.this, ProductDetailsActivity.class)

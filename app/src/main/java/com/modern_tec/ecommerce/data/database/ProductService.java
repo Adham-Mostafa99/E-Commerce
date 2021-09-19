@@ -29,7 +29,7 @@ import java.util.List;
 
 public class ProductService {
     private static final String PRODUCT_IMAGES_FOLDER_NAME = "Product Images";
-    private static final String PRODUCT_REF_NAME = "Products";
+    public static final String PRODUCT_REF_NAME = "Products";
     private final DatabaseReference productReference = FirebaseDatabase.getInstance().getReference();
     StorageReference storageReference = FirebaseStorage.getInstance().getReference().child(PRODUCT_IMAGES_FOLDER_NAME);
 
@@ -284,6 +284,8 @@ public class ProductService {
                     }
                 });
     }
+
+
 
     public void getProductByName(String productName) {
         productReference

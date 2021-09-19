@@ -16,6 +16,21 @@
         android:src="@drawable/ic_baseline_keyboard_backspace" />
 
 
+    <com.like.LikeButton
+        android:id="@+id/product_details_fav_btn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="26dp"
+        android:layout_marginEnd="24dp"
+        app:circle_end_color="#03A9F4"
+        app:circle_start_color="#2196F3"
+        app:dots_primary_color="#03A9F4"
+        app:dots_secondary_color="#2196F3"
+        app:icon_size="30dp"
+        app:like_drawable="@drawable/ic_baseline_favorite"
+        app:unlike_drawable="@drawable/ic_baseline_favorite_border" />
+
     <ImageView
         android:id="@+id/product_image_details"
         android:layout_width="match_parent"
@@ -86,67 +101,30 @@
         android:id="@+id/product_desc_details"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_above="@id/linear_1"
         android:layout_below="@id/txt_desc"
         android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="24dp"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="12dp"
+        android:scrollbars="vertical"
         android:text="A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like mine."
         android:textSize="14sp" />
 
 
-    <!--    <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton-->
-    <!--        android:id="@+id/product_number_increase_btn"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_below="@id/product_desc_details"-->
-    <!--        android:layout_centerHorizontal="true"-->
-    <!--        android:layout_marginTop="10dp"-->
-    <!--        android:elevation="6dp"-->
-    <!--        app:finalNumber="10"-->
-    <!--        app:initialNumber="0"-->
-    <!--        app:textSize="16sp" />-->
-
-    <!--    <LinearLayout-->
-    <!--        android:id="@+id/linear_total_1"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_below="@id/product_number_increase_btn"-->
-    <!--        android:layout_centerHorizontal="true"-->
-    <!--        android:layout_marginTop="10dp"-->
-    <!--        android:gravity="center"-->
-    <!--        android:orientation="horizontal">-->
-
-    <!--        <TextView-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:gravity="center"-->
-    <!--            android:text="Total Price: "-->
-    <!--            android:textSize="16sp"-->
-    <!--            android:textStyle="bold" />-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/product_total_price_details"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:gravity="center"-->
-    <!--            android:text="00.0 EG"-->
-    <!--            android:textSize="16sp"-->
-    <!--            android:textStyle="bold" />-->
-
-    <!--    </LinearLayout>-->
-
-
     <LinearLayout
+        android:id="@+id/linear_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:orientation="horizontal">
+
         <Button
             android:id="@+id/add_product_to_cart"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@color/gray"
             android:text="Add to Cart"
             android:textColor="@color/black"
@@ -155,15 +133,14 @@
         <Button
             android:id="@+id/buy_now_btn"
             android:layout_width="0dp"
-            android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:text="Buy Now"
             android:textColor="@color/white"
             android:textSize="18sp" />
 
     </LinearLayout>
-
 
 
 </RelativeLayout>

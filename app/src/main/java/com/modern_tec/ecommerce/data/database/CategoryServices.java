@@ -28,13 +28,13 @@ public class CategoryServices {
     }
 
     private void initCategories() {
-        categoryList.add(new Category("Men"
+        categoryList.add(new Category("men"
                 , ContextCompat.getDrawable(context, R.drawable.men_image)
                 , ContextCompat.getDrawable(context, R.drawable.category_item_men_color)));
-        categoryList.add(new Category("Women"
+        categoryList.add(new Category("women"
                 , ContextCompat.getDrawable(context, R.drawable.women_image)
                 , ContextCompat.getDrawable(context, R.drawable.category_item_women_color)));
-        categoryList.add(new Category("Kids"
+        categoryList.add(new Category("kids"
                 , ContextCompat.getDrawable(context, R.drawable.kids_image)
                 , ContextCompat.getDrawable(context, R.drawable.category_item_kids_color)));
     }

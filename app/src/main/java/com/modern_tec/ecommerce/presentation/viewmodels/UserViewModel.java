@@ -9,11 +9,14 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.modern_tec.ecommerce.core.models.Address;
+import com.modern_tec.ecommerce.core.models.Product;
 import com.modern_tec.ecommerce.core.models.Seller;
 import com.modern_tec.ecommerce.core.models.User;
 import com.modern_tec.ecommerce.data.repository.UserRepo;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class UserViewModel extends AndroidViewModel {
     private UserRepo userRepo;
@@ -133,5 +136,20 @@ public class UserViewModel extends AndroidViewModel {
 
     public LiveData<String> getPasswordResetLinkSent() {
         return userRepo.getPasswordResetLinkSent();
+    }
+
+    public LiveData<Boolean> storeProductOnFavorite(String id) {
+        return userRepo.storeProductOnFavorite(id);
+    }
+
+    public LiveData<Boolean> removeProductFromFavorite(String id) {
+        return userRepo.removeProductFromFavorite(id);
+    }
+
+    public LiveData<List<Product>> getUserFavProducts() {
+        return userRepo.getUserFavProducts();
+    }
+    public LiveData<Boolean> getIsProductFav(String id) {
+        return userRepo.getIsProductFav(id);
     }
 }

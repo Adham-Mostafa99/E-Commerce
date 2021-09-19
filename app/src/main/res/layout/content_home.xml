@@ -1,110 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:showIn="@layout/app_bar_home">
+    >
 
 
-    <LinearLayout
-        android:id="@+id/search_linear_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="16dp"
-        android:background="@drawable/search_background"
-        android:elevation="6dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:paddingHorizontal="12dp"
-        android:paddingVertical="8dp">
-
-        <ImageView
-            android:id="@+id/search_btn"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_baseline_search" />
-
-        <ImageView
-            android:layout_width="1dp"
-            android:layout_height="30dp"
-            android:layout_marginHorizontal="8dp"
-            android:src="@color/borders" />
-
-        <EditText
-            android:id="@+id/search_edit"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="15dp"
-            android:layout_weight="1"
-            android:background="@color/white"
-            android:hint="Search Your Product"
-            android:padding="4dp"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/category_txt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/search_linear_1"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="8dp"
-        android:fontFamily="sans-serif-light"
-        android:text="Categories"
-        android:textColor="@color/black"
-        android:textSize="22sp" />
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/category_txt"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/category_item" />
-
-    <TextView
-        android:id="@+id/featured_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/recycler_category"
-        android:layout_alignParentStart="true"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="sans-serif-light"
-        android:text="Featured"
-        android:textColor="@color/black"
-        android:textSize="22sp" />
-
-    <TextView
-        android:id="@+id/featured_see_all_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/recycler_category"
-        android:layout_alignParentEnd="true"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="26dp"
-        android:fontFamily="sans-serif-light"
-        android:text="See all"
-        android:textAlignment="gravity"
-        android:textColor="@color/black"
-        android:textSize="14sp" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_menu"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/featured_txt"
-        android:layout_centerHorizontal="true"
-        android:orientation="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        tools:listitem="@layout/product_item" />
+        android:background="@color/white"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        tools:showIn="@layout/app_bar_home">
 
-</RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/search_linear_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="16dp"
+            android:background="@drawable/search_background"
+            android:elevation="6dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp">
+
+            <ImageView
+                android:id="@+id/search_btn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_baseline_search" />
+
+            <ImageView
+                android:layout_width="1dp"
+                android:layout_height="30dp"
+                android:layout_marginHorizontal="8dp"
+                android:src="@color/borders" />
+
+            <EditText
+                android:id="@+id/search_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:hint="Search Your Product"
+                android:padding="4dp"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/category_txt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/search_linear_1"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:fontFamily="sans-serif-light"
+            android:text="Categories"
+            android:textColor="@color/black"
+            android:textSize="22sp" />
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/category_txt"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/category_item" />
+
+        <TextView
+            android:id="@+id/featured_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recycler_category"
+            android:layout_alignParentStart="true"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="sans-serif-light"
+            android:text="Featured"
+            android:textColor="@color/black"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/featured_see_all_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recycler_category"
+            android:layout_alignParentEnd="true"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="26dp"
+            android:fontFamily="sans-serif-light"
+            android:text="See all"
+            android:textAlignment="gravity"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/featured_txt"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/product_item" />
+
+
+
+
+
+
+        <TextView
+            android:id="@+id/fav_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recycler_menu"
+            android:layout_alignParentStart="true"
+            android:layout_marginHorizontal="16dp"
+            android:fontFamily="sans-serif-light"
+            android:text="Favorites"
+            android:textColor="@color/black"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/fav_see_all_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recycler_menu"
+            android:layout_alignParentEnd="true"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="6dp"
+            android:fontFamily="sans-serif-light"
+            android:text="See all"
+            android:textAlignment="gravity"
+            android:textColor="@color/black"
+            android:textSize="14sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_menu_fav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fav_txt"
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            tools:listitem="@layout/product_item" />
+
+
+    </RelativeLayout>
+
+</ScrollView>
+

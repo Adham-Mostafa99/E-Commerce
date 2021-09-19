@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
@@ -62,6 +63,7 @@ public class FeaturesActivity extends AppCompatActivity {
 
 
         if (categoryName != null) {
+            Log.v("TAG", categoryName);
             productViewModel.getProductsByCategory(categoryName).observe(this, new Observer<List<Product>>() {
                 @Override
                 public void onChanged(List<Product> products) {
@@ -94,7 +96,7 @@ public class FeaturesActivity extends AppCompatActivity {
         binding.closeFeatureSearchBtn.setVisibility(View.VISIBLE);
         binding.searchProductName.setVisibility(View.VISIBLE);
 
-        if (productName!=null)
+        if (productName != null)
             binding.searchProductName.setText(productName);
 
         binding.searchProductName.addTextChangedListener(new TextWatcher() {

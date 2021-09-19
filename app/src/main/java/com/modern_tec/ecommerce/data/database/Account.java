@@ -2,6 +2,7 @@ package com.modern_tec.ecommerce.data.database;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.modern_tec.ecommerce.core.models.Address;
+import com.modern_tec.ecommerce.core.models.Product;
 import com.modern_tec.ecommerce.core.models.Seller;
 import com.modern_tec.ecommerce.core.models.User;
 import com.modern_tec.ecommerce.data.shared_pref.UserType;
@@ -199,7 +201,6 @@ public class Account {
 
         return isLogin;
     }
-
 
 
     public void loginUser(String email, String pass) {
@@ -486,6 +487,166 @@ public class Account {
                 });
 
         return updated;
+    }
+
+    public LiveData<Boolean> storeProductOnFavorite(String id) {
+        MutableLiveData<Boolean> isProductStore = new MutableLiveData<>();
+
+        rootRef
+                .child(parentUserDbName)
+                .child(getUserId())
+                .child("favorites")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<DataSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<String> favList = new ArrayList<>();
+                            for (DataSnapshot dataSnapshot : task.getResult().getChildren())
+                                favList.add(dataSnapshot.getValue(String.class));
+
+
+                            if (!favList.contains(id)) {
+                                favList.add(id);
+
+                                rootRef
+                                        .child(parentUserDbName)
+                                        .child(getUserId())
+                                        .child("favorites")
+                                        .setValue(favList)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    isProductStore.setValue(true);
+                                                }
+                                            }
+                                        });
+
+                            }
+
+                        }
+                    }
+                });
+
+        return isProductStore;
+    }
+
+    public LiveData<Boolean> removeProductFromFavorite(String id) {
+        MutableLiveData<Boolean> isProductRemove = new MutableLiveData<>();
+
+        rootRef
+                .child(parentUserDbName)
+                .child(getUserId())
+                .child("favorites")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<DataSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            List<String> favList = new ArrayList<>();
+                            for (DataSnapshot dataSnapshot : task.getResult().getChildren())
+                                favList.add(dataSnapshot.getValue(String.class));
+
+                            if (!favList.isEmpty() && favList.contains(id)) {
+                                favList.remove(id);
+
+                                rootRef
+                                        .child(parentUserDbName)
+                                        .child(getUserId())
+                                        .child("favorites")
+                                        .setValue(favList)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull @NotNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    isProductRemove.setValue(true);
+                                                }
+                                            }
+                                        });
+
+
+                            }
+
+                        }
+                    }
+                });
+
+        return isProductRemove;
+    }
+
+    public LiveData<List<Product>> getUserFavProducts() {
+        MutableLiveData<List<Product>> productsListLivedata = new MutableLiveData<>();
+
+        rootRef
+                .child(parentUserDbName)
+                .child(getUserId())
+                .child("favorites")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        List<Product> productList = new ArrayList<>();
+                        productsListLivedata.setValue(productList);
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            String id = dataSnapshot.getValue(String.class);
+                            rootRef
+                                    .child(ProductService.PRODUCT_REF_NAME)
+                                    .orderByChild("productId")
+                                    .equalTo(id)
+                                    .addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                                            for (DataSnapshot dataSnapshot1 : snapshot.getChildren()) {
+                                                if (dataSnapshot1.exists()) {
+                                                    productList.add(dataSnapshot1.getValue(Product.class));
+                                                    productsListLivedata.postValue(productList);
+
+                                                }
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                                        }
+                                    });
+                        }
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                    }
+                });
+        return productsListLivedata;
+    }
+
+
+    public LiveData<Boolean> getIsProductFav(String id) {
+        MutableLiveData<Boolean> isFav = new MutableLiveData<>();
+        rootRef
+                .child(parentUserDbName)
+                .child(getUserId())
+                .child("favorites")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull @NotNull DataSnapshot snapshot) {
+                        for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                            if (dataSnapshot.exists() && dataSnapshot.getValue(String.class).equals(id))
+                                isFav.setValue(true);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull @NotNull DatabaseError error) {
+
+                    }
+                });
+
+
+        return isFav;
     }
 
     public MutableLiveData<Seller> getSellerMutableLiveData() {

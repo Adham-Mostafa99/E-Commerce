@@ -6,6 +6,7 @@ public class User {
     protected String email;
     protected String name;
     protected String photoUrl;
+    private List<String> favorites;
     protected List<Address> address;
 
 
@@ -17,6 +18,14 @@ public class User {
         this.name = name;
         this.photoUrl = photoUrl;
         this.address = address;
+    }
+
+    public List<String> getFavorites() {
+        return favorites;
+    }
+
+    public void setFavorites(List<String> favorites) {
+        this.favorites = favorites;
     }
 
     public void setEmail(String email) {
@@ -52,7 +61,6 @@ public class User {
     public String getEmail() {
         return email;
     }
-
 
 
 }

@@ -7,9 +7,12 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.auth.FirebaseUser;
 import com.modern_tec.ecommerce.core.models.Address;
+import com.modern_tec.ecommerce.core.models.Product;
 import com.modern_tec.ecommerce.core.models.Seller;
 import com.modern_tec.ecommerce.core.models.User;
 import com.modern_tec.ecommerce.data.database.Account;
+
+import java.util.List;
 
 public class UserRepo {
 
@@ -106,6 +109,23 @@ public class UserRepo {
     public LiveData<String> getPasswordResetLinkSent() {
         return account.getPasswordResetLinkSent();
     }
+
+    public LiveData<Boolean> storeProductOnFavorite(String id) {
+        return account.storeProductOnFavorite(id);
+    }
+
+    public LiveData<Boolean> removeProductFromFavorite(String id) {
+        return account.removeProductFromFavorite(id);
+    }
+
+    public LiveData<List<Product>> getUserFavProducts() {
+        return account.getUserFavProducts();
+    }
+
+    public LiveData<Boolean> getIsProductFav(String id) {
+        return account.getIsProductFav(id);
+    }
+
 
     public String getUserId() {
         return account.getUserId();
